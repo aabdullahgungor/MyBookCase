@@ -1,0 +1,12 @@
+go 1.19
+
+use (
+    "./cmd"
+    "./controllers"
+    "./database"
+    "./helpers"
+    "./models"
+    "./router"
+    "./server"
+
+)
