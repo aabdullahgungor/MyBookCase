@@ -20,3 +20,7 @@ func GetDB() (*gorm.DB, error) {
 	}
 	return db, nil
 }
+
+func CloseDB() (db *gorm.DB) {
+	db.Close()
+}
