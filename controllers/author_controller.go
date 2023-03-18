@@ -17,6 +17,10 @@ func CreateAuthor(c *gin.Context)  {
 	
 }
 
+func EditAuthor(c *gin.Context)  {
+	
+}
+
 func DeleteAuthor(c *gin.Context)  {
 	
 }

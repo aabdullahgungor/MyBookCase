@@ -17,6 +17,10 @@ func CreateCategory(c *gin.Context)  {
 	
 }
 
+func EditCategory(c *gin.Context)  {
+	
+}
+
 func DeleteCategory(c *gin.Context)  {
 	
 }

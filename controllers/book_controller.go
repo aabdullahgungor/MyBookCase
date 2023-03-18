@@ -19,6 +19,10 @@ func CreateBook(c *gin.Context)  {
 	
 }
 
+func EditBook(c *gin.Context)  {
+	
+}
+
 func DeleteBook(c *gin.Context)  {
 	
 }

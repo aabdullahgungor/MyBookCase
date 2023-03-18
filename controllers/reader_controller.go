@@ -17,6 +17,10 @@ func CreateReader(c *gin.Context)  {
 	
 }
 
+func EditReader(c *gin.Context)  {
+	
+}
+
 func DeleteReader(c *gin.Context)  {
 	
 }

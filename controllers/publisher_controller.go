@@ -17,6 +17,10 @@ func CreatePublisher(c *gin.Context)  {
 	
 }
 
+func EditPublisher(c *gin.Context)  {
+	
+}
+
 func DeletePublisher(c *gin.Context)  {
 	
 }
