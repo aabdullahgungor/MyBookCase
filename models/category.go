@@ -1,5 +1,4 @@
-package entities
-
+package models
 import 
 (
 	"fmt"
