@@ -19,8 +19,8 @@ func NewServer() Server {
 }
 
 func (s *Server) Run() {
-	router := routes.ConfigRoutes(s.server)
+	router := router.ConfigRoutes(s.server)
 
 	log.Printf("Server running at port: %v", s.port)
-	log.Fatal(router.Run(":" + s.port))
+	log.Fatal(router.Run("localhost:" + s.port))
 }

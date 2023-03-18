@@ -1,8 +1,10 @@
+package controllers
+
 import (
-	"strconv"
+	//"strconv"
 	"github.com/gin-gonic/gin"
-	"github.com/aabdullahgungor/mybookcase/database"
-	"github.com/aabdullahgungor/mybookcase/models"
+	//"github.com/aabdullahgungor/mybookcase/database"
+	//"github.com/aabdullahgungor/mybookcase/models"
 )
 
 func GetAllPublishers(c *gin.Context)  {

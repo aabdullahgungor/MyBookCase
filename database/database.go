@@ -1,4 +1,4 @@
-package config
+package database
 
 import (
 	"github.com/jinzhu/gorm"
@@ -19,8 +19,4 @@ func GetDB() (*gorm.DB, error) {
 		return nil, err
 	}
 	return db, nil
-}
-
-func CloseDB() (db *gorm.DB) {
-	db.Close()
 }
