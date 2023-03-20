@@ -8,26 +8,26 @@ import (
 	//"github.com/aabdullahgungor/mybookcase/models"
 )
 
-func GetAllBooks(c *gin.Context)  {
-
-	// db, _:= database.GetDB()
-	// var books []models.Book
-	// db.Find(&books)
-	// c.IndentedJSON(http.StatusOK, books)
+type BookController struct{
 }
 
-func GetBook(c *gin.Context)  {
+func (b BookController) GetAll(c *gin.Context)  {
+
 	
 }
 
-func CreateBook(c *gin.Context)  {
+func (b BookController) GetById(c *gin.Context)  {
 	
 }
 
-func EditBook(c *gin.Context)  {
+func (b BookController) Create(c *gin.Context)  {
 	
 }
 
-func DeleteBook(c *gin.Context)  {
+func (b BookController) Edit(c *gin.Context)  {
+	
+}
+
+func (b BookController) Delete(c *gin.Context)  {
 	
 }

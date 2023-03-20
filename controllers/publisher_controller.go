@@ -7,22 +7,25 @@ import (
 	//"github.com/aabdullahgungor/mybookcase/models"
 )
 
-func GetAllPublishers(c *gin.Context)  {
+type PublisherController struct{
+}
+
+func (p PublisherController) GetAll(c *gin.Context)  {
 	
 }
 
-func GetPublisher(c *gin.Context)  {
+func (p PublisherController) GetById(c *gin.Context)  {
 	
 }
 
-func CreatePublisher(c *gin.Context)  {
+func (p PublisherController) Create(c *gin.Context)  {
 	
 }
 
-func EditPublisher(c *gin.Context)  {
+func (p PublisherController) Edit(c *gin.Context)  {
 	
 }
 
-func DeletePublisher(c *gin.Context)  {
+func (p PublisherController) Delete(c *gin.Context)  {
 	
 }

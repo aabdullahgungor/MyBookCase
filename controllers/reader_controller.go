@@ -7,22 +7,25 @@ import (
 	//"github.com/aabdullahgungor/mybookcase/models"
 )
 
-func GetAllReaders(c *gin.Context)  {
+type ReaderController struct{
+}
+
+func (r ReaderController) GetAll(c *gin.Context)  {
 	
 }
 
-func GetReader(c *gin.Context)  {
+func (r ReaderController) GetById(c *gin.Context)  {
 	
 }
 
-func CreateReader(c *gin.Context)  {
+func (r ReaderController) Create(c *gin.Context)  {
 	
 }
 
-func EditReader(c *gin.Context)  {
+func (r ReaderController) Edit(c *gin.Context)  {
 	
 }
 
-func DeleteReader(c *gin.Context)  {
+func (r ReaderController) Delete(c *gin.Context)  {
 	
 }
