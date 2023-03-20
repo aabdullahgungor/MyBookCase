@@ -11,4 +11,6 @@ type BookModel struct {
 	Language string `json:"language"`
 	isbn string `json:"isbn"`
 	imageUrl string `json:"image_url"`
+	AuthorID int `json:"autor_id"`
+	ReaderID int `json:"reader_id"`
 }
