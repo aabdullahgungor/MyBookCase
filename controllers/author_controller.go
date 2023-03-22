@@ -1,21 +1,17 @@
 package controllers
 
 import (
-	// "strconv"
+	"net/http"
 	"github.com/gin-gonic/gin"
-	"github.com/aabdullahgungor/mybookcase/database"
 	"github.com/aabdullahgungor/mybookcase/models"
-	"github.com/aabdullahgungor/mybookcase/business"
 )
 
 type AuthorController struct{
 }
 
 func (a AuthorController) GetAll(c *gin.Context)  {
-	authors, err := business.Author{}.GetAll()
-	if err != nil {
-		return err
-	}
+	var authorModel models.AuthorModel
+	authors, _ := authorModel.GetAll()
 	c.IndentedJSON(http.StatusOK, authors)
 }
 

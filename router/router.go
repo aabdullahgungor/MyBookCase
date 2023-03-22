@@ -10,45 +10,46 @@ func ConfigRoutes(router *gin.Engine) *gin.Engine{
 	{
 		books := main.Group("books")
 		{
-			books.GET("/", controllers.GetAllBooks)
-			books.GET("/:id", controllers.GetBook)
-			books.POST("/", controllers.CreateBook)
-			books.PUT("/", controllers.EditBook)
-			books.DELETE("/:id", controllers.DeleteBook)
+			books.GET("/", controllers.BookController{}.GetAll)
+			books.GET("/:id", controllers.BookController{}.GetById)
+			books.POST("/", controllers.BookController{}.Create)
+			books.PUT("/", controllers.BookController{}.Edit)
+			books.DELETE("/:id", controllers.BookController{}.Delete)
 		}
 		authors := main.Group("authors")
 		{
-			authors.GET("/", controllers.GetAllAuthors)
-			authors.GET("/:id", controllers.GetAuthor)
-			authors.POST("/", controllers.CreateAuthor)
-			authors.PUT("/", controllers.EditAuthor)
-			authors.DELETE("/:id", controllers.DeleteAuthor)
+			authors.GET("/", controllers.AuthorController{}.GetAll)
+			authors.GET("/:id",controllers.AuthorController{}.GetById)
+			authors.POST("/", controllers.AuthorController{}.Create)
+			authors.PUT("/", controllers.AuthorController{}.Edit)
+			authors.DELETE("/:id", controllers.AuthorController{}.Delete)
 		}
+		
 		categories := main.Group("categories")
 		{
-			categories.GET("/", controllers.GetAllCategories)
-			categories.GET("/:id", controllers.GetCategory)
-			categories.POST("/", controllers.CreateCategory)
-			categories.PUT("/", controllers.EditCategory)
-			categories.DELETE("/:id", controllers.DeleteCategory)
+			categories.GET("/", controllers.CategoryController{}.GetAll)
+			categories.GET("/:id", controllers.CategoryController{}.GetById)
+			categories.POST("/", controllers.CategoryController{}.Create)
+			categories.PUT("/", controllers.CategoryController{}.Edit)
+			categories.DELETE("/:id", controllers.CategoryController{}.Delete)
 		}
 		publishers := main.Group("publishers")
 		{
-			publishers.GET("/", controllers.GetAllPublishers)
-			publishers.GET("/:id", controllers.GetPublisher)
-			publishers.POST("/", controllers.CreatePublisher)
-			publishers.PUT("/", controllers.EditPublisher)
-			publishers.DELETE("/:id", controllers.DeletePublisher)
+			publishers.GET("/", controllers.PublisherController{}.GetAll)
+			publishers.GET("/:id", controllers.PublisherController{}.GetById)
+			publishers.POST("/", controllers.PublisherController{}.Create)
+			publishers.PUT("/", controllers.PublisherController{}.Edit)
+			publishers.DELETE("/:id", controllers.PublisherController{}.Delete)
 		}
 		readers := main.Group("readers")
 		{
-			readers.GET("/", controllers.GetAllReaders)
-			readers.GET("/:id", controllers.GetReader)
-			readers.POST("/", controllers.CreateReader)
-			readers.PUT("/", controllers.EditReader)
-			readers.DELETE("/:id", controllers.DeleteReader)
+			readers.GET("/", controllers.ReaderController{}.GetAll)
+			readers.GET("/:id", controllers.ReaderController{}.GetById)
+			readers.POST("/", controllers.ReaderController{}.Create)
+			readers.PUT("/", controllers.ReaderController{}.Edit)
+			readers.DELETE("/:id", controllers.ReaderController{}.Delete)
 		}
-
+		
 	}
 	return router
 }

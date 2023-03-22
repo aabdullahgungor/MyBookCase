@@ -1,19 +1,18 @@
 package controllers 
 
 import (
-	//"strconv"
-	//"net/http"
+	"net/http"
 	"github.com/gin-gonic/gin"
-	//"github.com/aabdullahgungor/mybookcase/database"
-	//"github.com/aabdullahgungor/mybookcase/models"
+	"github.com/aabdullahgungor/mybookcase/models"
 )
 
 type BookController struct{
 }
 
 func (b BookController) GetAll(c *gin.Context)  {
-
-	
+	var bookModel models.BookModel
+	books, _ := bookModel.GetAll()
+	c.IndentedJSON(http.StatusOK, books)	
 }
 
 func (b BookController) GetById(c *gin.Context)  {
