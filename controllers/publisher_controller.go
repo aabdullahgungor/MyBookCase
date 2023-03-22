@@ -72,5 +72,30 @@ func (p PublisherController) Edit(c *gin.Context)  {
 }
 
 func (p PublisherController) Delete(c *gin.Context)  {
+
+	str_id := c.Param("id")
+	int_id, err := strconv.Atoi(str_id)
+
+	if err != nil {
+		c.JSON(400, gin.H{
+			"error": "ID has to be integer",
+		})
+		return
+	}
+
+	var publisherModel models.PublisherModel
+	publisher, _ := publisherModel.GetById(int_id)
+
+	err = publisherModel.Delete(publisher)
+
+	if err != nil {
+		c.JSON(400, gin.H{
+			"error": "cannot delete publisher: " + err.Error(),
+		})
+		return
+	}
+
+
+	c.IndentedJSON(http.StatusAccepted, gin.H{"message":"Publisher has been deleted","publisher_id": publisher.ID})
 	
 }

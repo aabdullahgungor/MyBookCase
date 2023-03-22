@@ -50,3 +50,13 @@ func (publisherModel PublisherModel) Edit(publisher *entities.Publisher) error {
 		return nil
 	}
 }
+
+func (publisherModel PublisherModel) Delete(publisher entities.Publisher) error {
+	db, err := database.GetDB()
+	if err != nil {
+		return err
+	} else {
+		db.Delete(publisher)
+		return nil
+	}
+}

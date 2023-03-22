@@ -50,3 +50,13 @@ func (readerModel ReaderModel) Edit(reader *entities.Reader) error {
 		return nil
 	}
 }
+
+func (readerModel ReaderModel) Delete(reader entities.Reader) error {
+	db, err := database.GetDB()
+	if err != nil {
+		return err
+	} else {
+		db.Delete(reader)
+		return nil
+	}
+}

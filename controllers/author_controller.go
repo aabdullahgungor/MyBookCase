@@ -72,5 +72,30 @@ func (a AuthorController) Edit(c *gin.Context)  {
 }
 
 func (a AuthorController) Delete(c *gin.Context)  {
+	str_id := c.Param("id")
+	int_id, err := strconv.Atoi(str_id)
+
+	if err != nil {
+		c.JSON(400, gin.H{
+			"error": "ID has to be integer",
+		})
+		return
+	}
+
+	var authorModel models.AuthorModel
+	author, _ := authorModel.GetById(int_id)
+
+	err = authorModel.Delete(author)
+
+	if err != nil {
+		c.JSON(400, gin.H{
+			"error": "cannot delete author: " + err.Error(),
+		})
+		return
+	}
+
+
+	c.IndentedJSON(http.StatusAccepted, gin.H{"message":"Author has been deleted","author_id": author.ID})
 	
 }
+

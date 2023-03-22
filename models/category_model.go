@@ -49,3 +49,13 @@ func (categoryModel CategoryModel) Edit(category *entities.Category) error {
 		return nil
 	}
 }
+
+func (categoryModel CategoryModel) Delete(category entities.Category) error {
+	db, err := database.GetDB()
+	if err != nil {
+		return err
+	} else {
+		db.Delete(category)
+		return nil
+	}
+}

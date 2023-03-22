@@ -73,4 +73,28 @@ func (b BookController) Edit(c *gin.Context)  {
 
 func (b BookController) Delete(c *gin.Context)  {
 	
+	str_id := c.Param("id")
+	int_id, err := strconv.Atoi(str_id)
+
+	if err != nil {
+		c.JSON(400, gin.H{
+			"error": "ID has to be integer",
+		})
+		return
+	}
+
+	var bookModel models.BookModel
+	book, _ := bookModel.GetById(int_id)
+
+	err = bookModel.Delete(book)
+
+	if err != nil {
+		c.JSON(400, gin.H{
+			"error": "cannot delete book: " + err.Error(),
+		})
+		return
+	}
+
+
+	c.IndentedJSON(http.StatusAccepted, gin.H{"message":"Book has been deleted","book_id": book.ID})
 }

@@ -52,3 +52,13 @@ func (bookModel BookModel) Edit(book *entities.Book) error {
 		return nil
 	}
 }
+
+func (bookModel BookModel) Delete(book entities.Book) error {
+	db, err := database.GetDB()
+	if err != nil {
+		return err
+	} else {
+		db.Delete(book)
+		return nil
+	}
+}

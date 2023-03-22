@@ -74,4 +74,28 @@ func (r ReaderController) Edit(c *gin.Context)  {
 
 func (r ReaderController) Delete(c *gin.Context)  {
 	
+	str_id := c.Param("id")
+	int_id, err := strconv.Atoi(str_id)
+
+	if err != nil {
+		c.JSON(400, gin.H{
+			"error": "ID has to be integer",
+		})
+		return
+	}
+
+	var readerModel models.ReaderModel
+	reader, _ := readerModel.GetById(int_id)
+
+	err = readerModel.Delete(reader)
+
+	if err != nil {
+		c.JSON(400, gin.H{
+			"error": "cannot delete reader: " + err.Error(),
+		})
+		return
+	}
+
+
+	c.IndentedJSON(http.StatusAccepted, gin.H{"message":"Reader has been deleted","reader_id": reader.ID})
 }

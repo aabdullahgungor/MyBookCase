@@ -52,3 +52,13 @@ func (authorModel AuthorModel) Edit(author *entities.Author) error {
 		return nil
 	}
 }
+
+func (authorModel AuthorModel) Delete(author entities.Author) error {
+	db, err := database.GetDB()
+	if err != nil {
+		return err
+	} else {
+		db.Delete(author)
+		return nil
+	}
+}

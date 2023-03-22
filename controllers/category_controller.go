@@ -74,4 +74,28 @@ func (C CategoryController) Edit(c *gin.Context)  {
 
 func (C CategoryController) Delete(c *gin.Context)  {
 	
+	str_id := c.Param("id")
+	int_id, err := strconv.Atoi(str_id)
+
+	if err != nil {
+		c.JSON(400, gin.H{
+			"error": "ID has to be integer",
+		})
+		return
+	}
+
+	var categoryModel models.CategoryModel
+	category, _ := categoryModel.GetById(int_id)
+
+	err = categoryModel.Delete(category)
+
+	if err != nil {
+		c.JSON(400, gin.H{
+			"error": "cannot delete category: " + err.Error(),
+		})
+		return
+	}
+
+
+	c.IndentedJSON(http.StatusAccepted, gin.H{"message":"Category has been deleted","category_id": category.ID})
 }
