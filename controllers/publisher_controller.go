@@ -5,6 +5,7 @@ import (
 	"net/http"
 	"github.com/gin-gonic/gin"
 	"github.com/aabdullahgungor/mybookcase/models"
+	"github.com/aabdullahgungor/mybookcase/entities"
 )
 
 type PublisherController struct{
@@ -26,6 +27,25 @@ func (p PublisherController) GetById(c *gin.Context)  {
 
 func (p PublisherController) Create(c *gin.Context)  {
 	
+	var publisher entities.Publisher
+	err := c.ShouldBindJSON(&publisher)
+	if err != nil {
+		c.IndentedJSON(400, gin.H{
+			"error": "cannot bind JSON: " + err.Error(),
+		})
+		return
+	}
+
+	var publisherModel models.PublisherModel
+	err = publisherModel.Create(&publisher)
+	if err != nil {
+		c.IndentedJSON(http.StatusCreated, gin.H{
+			"error": "cannot create publisher: " + err.Error(),
+		})
+		return
+	}
+
+	c.IndentedJSON(http.StatusCreated, gin.H{"message":"Publisher has been created","publisher_id": publisher.ID})
 }
 
 func (p PublisherController) Edit(c *gin.Context)  {

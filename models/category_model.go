@@ -29,3 +29,13 @@ func (categoryModel CategoryModel) GetById(id int) (entities.Category, error) {
 		return category, nil
 	}
 }
+
+func (categoryModel CategoryModel) Create(category *entities.Category) error {
+	db, err := database.GetDB()
+	if err != nil {
+		return err
+	} else {
+		db.Create(&category)
+		return nil
+	}
+}

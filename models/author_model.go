@@ -31,3 +31,14 @@ func (authorModel AuthorModel) GetById(id int) (entities.Author, error) {
 		return author, nil
 	}
 }
+
+
+func (authorModel AuthorModel) Create(author *entities.Author) error {
+	db, err := database.GetDB()
+	if err != nil {
+		return err
+	} else {
+		db.Create(&author)
+		return nil
+	}
+}

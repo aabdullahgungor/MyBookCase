@@ -5,6 +5,7 @@ import (
 	"net/http"
 	"github.com/gin-gonic/gin"
 	"github.com/aabdullahgungor/mybookcase/models"
+	"github.com/aabdullahgungor/mybookcase/entities"
 )
 
 type ReaderController struct{
@@ -25,6 +26,26 @@ func (r ReaderController) GetById(c *gin.Context)  {
 }
 
 func (r ReaderController) Create(c *gin.Context)  {
+
+	var reader entities.Reader
+	err := c.ShouldBindJSON(&reader)
+	if err != nil {
+		c.IndentedJSON(400, gin.H{
+			"error": "cannot bind JSON: " + err.Error(),
+		})
+		return
+	}
+
+	var readerModel models.ReaderModel
+	err = readerModel.Create(&reader)
+	if err != nil {
+		c.IndentedJSON(http.StatusCreated, gin.H{
+			"error": "cannot create reader: " + err.Error(),
+		})
+		return
+	}
+
+	c.IndentedJSON(http.StatusCreated, gin.H{"message":"Reader has been created","reader_id": reader.ID})
 	
 }
 

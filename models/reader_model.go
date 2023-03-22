@@ -30,3 +30,13 @@ func (readerModel ReaderModel) GetById(id int) (entities.Reader, error) {
 		return reader, nil
 	}
 }
+
+func (readerModel ReaderModel) Create(reader *entities.Reader) error {
+	db, err := database.GetDB()
+	if err != nil {
+		return err
+	} else {
+		db.Create(&reader)
+		return nil
+	}
+}

@@ -5,6 +5,7 @@ import (
 	"net/http"
 	"github.com/gin-gonic/gin"
 	"github.com/aabdullahgungor/mybookcase/models"
+	"github.com/aabdullahgungor/mybookcase/entities"
 )
 
 type AuthorController struct{
@@ -26,7 +27,25 @@ func (a AuthorController) GetById(c *gin.Context)  {
 }
 
 func (a AuthorController) Create(c *gin.Context)  {
-	
+	var author entities.Author
+	err := c.ShouldBindJSON(&author)
+	if err != nil {
+		c.IndentedJSON(400, gin.H{
+			"error": "cannot bind JSON: " + err.Error(),
+		})
+		return
+	}
+
+	var authorModel models.AuthorModel
+	err = authorModel.Create(&author)
+	if err != nil {
+		c.IndentedJSON(http.StatusCreated, gin.H{
+			"error": "cannot create author: " + err.Error(),
+		})
+		return
+	}
+
+	c.IndentedJSON(http.StatusCreated, gin.H{"message":"Author has been created","author_id": author.ID})
 }
 
 func (a AuthorController) Edit(c *gin.Context)  {

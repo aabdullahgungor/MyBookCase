@@ -5,6 +5,7 @@ import (
 	"net/http"
 	"github.com/gin-gonic/gin"
 	"github.com/aabdullahgungor/mybookcase/models"
+	"github.com/aabdullahgungor/mybookcase/entities"
 )
 
 
@@ -26,6 +27,25 @@ func (C CategoryController) GetById(c *gin.Context)  {
 }
 
 func (C CategoryController) Create(c *gin.Context)  {
+	var category entities.Category
+	err := c.ShouldBindJSON(&category)
+	if err != nil {
+		c.IndentedJSON(400, gin.H{
+			"error": "cannot bind JSON: " + err.Error(),
+		})
+		return
+	}
+
+	var categoryModel models.CategoryModel
+	err = categoryModel.Create(&category)
+	if err != nil {
+		c.IndentedJSON(http.StatusCreated, gin.H{
+			"error": "cannot create category: " + err.Error(),
+		})
+		return
+	}
+
+	c.IndentedJSON(http.StatusCreated, gin.H{"message":"Category has been created","category_id": category.ID})
 	
 }
 

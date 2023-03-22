@@ -32,4 +32,12 @@ func (bookModel BookModel) GetById(id int) (entities.Book, error) {
 	}
 }
 
-
+func (bookModel BookModel) Create(book *entities.Book) error {
+	db, err := database.GetDB()
+	if err != nil {
+		return err
+	} else {
+		db.Create(&book)
+		return nil
+	}
+}

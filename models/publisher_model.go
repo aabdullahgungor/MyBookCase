@@ -30,3 +30,13 @@ func (publisherModel PublisherModel) GetById(id int) (entities.Publisher, error)
 		return publisher, nil
 	}
 }
+
+func (publisherModel PublisherModel) Create(publisher *entities.Publisher) error {
+	db, err := database.GetDB()
+	if err != nil {
+		return err
+	} else {
+		db.Create(&publisher)
+		return nil
+	}
+}
