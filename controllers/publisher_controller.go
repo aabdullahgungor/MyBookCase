@@ -39,8 +39,8 @@ func (p PublisherController) Create(c *gin.Context)  {
 	var publisherModel models.PublisherModel
 	err = publisherModel.Create(&publisher)
 	if err != nil {
-		c.IndentedJSON(http.StatusCreated, gin.H{
-			"error": "cannot create publisher: " + err.Error(),
+		c.IndentedJSON(http.StatusNotAcceptable, gin.H{
+			"error": "cannot edit publisher: " + err.Error(),
 		})
 		return
 	}
@@ -50,6 +50,25 @@ func (p PublisherController) Create(c *gin.Context)  {
 
 func (p PublisherController) Edit(c *gin.Context)  {
 	
+	var publisher entities.Publisher
+	err := c.ShouldBindJSON(&publisher)
+	if err != nil {
+		c.IndentedJSON(400, gin.H{
+			"error": "cannot bind JSON: " + err.Error(),
+		})
+		return
+	}
+
+	var publisherModel models.PublisherModel
+	err = publisherModel.Edit(&publisher)
+	if err != nil {
+		c.IndentedJSON(http.StatusNotAcceptable, gin.H{
+			"error": "cannot edit publisher: " + err.Error(),
+		})
+		return
+	}
+
+	c.IndentedJSON(http.StatusAccepted, gin.H{"message":"Publisher has been edited","publisher_id": publisher.ID})
 }
 
 func (p PublisherController) Delete(c *gin.Context)  {

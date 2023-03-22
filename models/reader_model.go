@@ -40,3 +40,13 @@ func (readerModel ReaderModel) Create(reader *entities.Reader) error {
 		return nil
 	}
 }
+
+func (readerModel ReaderModel) Edit(reader *entities.Reader) error {
+	db, err := database.GetDB()
+	if err != nil {
+		return err
+	} else {
+		db.Save(&reader)
+		return nil
+	}
+}

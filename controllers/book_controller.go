@@ -38,7 +38,7 @@ func (b BookController) Create(c *gin.Context)  {
 	var bookModel models.BookModel
 	err = bookModel.Create(&book)
 	if err != nil {
-		c.IndentedJSON(http.StatusCreated, gin.H{
+		c.IndentedJSON(http.StatusNotAcceptable, gin.H{
 			"error": "cannot create book: " + err.Error(),
 		})
 		return
@@ -49,6 +49,25 @@ func (b BookController) Create(c *gin.Context)  {
 }
 
 func (b BookController) Edit(c *gin.Context)  {
+	var book entities.Book
+	err := c.ShouldBindJSON(&book)
+	if err != nil {
+		c.IndentedJSON(400, gin.H{
+			"error": "cannot bind JSON: " + err.Error(),
+		})
+		return
+	}
+
+	var bookModel models.BookModel
+	err = bookModel.Edit(&book)
+	if err != nil {
+		c.IndentedJSON(http.StatusNotAcceptable, gin.H{
+			"error": "cannot create book: " + err.Error(),
+		})
+		return
+	}
+
+	c.IndentedJSON(http.StatusAccepted, gin.H{"message":"Book has been edited","book_id": book.ID})
 	
 }
 

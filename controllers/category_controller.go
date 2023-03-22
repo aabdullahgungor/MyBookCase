@@ -39,7 +39,7 @@ func (C CategoryController) Create(c *gin.Context)  {
 	var categoryModel models.CategoryModel
 	err = categoryModel.Create(&category)
 	if err != nil {
-		c.IndentedJSON(http.StatusCreated, gin.H{
+		c.IndentedJSON(http.StatusNotAcceptable, gin.H{
 			"error": "cannot create category: " + err.Error(),
 		})
 		return
@@ -50,6 +50,25 @@ func (C CategoryController) Create(c *gin.Context)  {
 }
 
 func (C CategoryController) Edit(c *gin.Context)  {
+	var category entities.Category
+	err := c.ShouldBindJSON(&category)
+	if err != nil {
+		c.IndentedJSON(400, gin.H{
+			"error": "cannot bind JSON: " + err.Error(),
+		})
+		return
+	}
+
+	var categoryModel models.CategoryModel
+	err = categoryModel.Edit(&category)
+	if err != nil {
+		c.IndentedJSON(http.StatusNotAcceptable, gin.H{
+			"error": "cannot edit category: " + err.Error(),
+		})
+		return
+	}
+
+	c.IndentedJSON(http.StatusAccepted, gin.H{"message":"Category has been edited","category_id": category.ID})
 	
 }
 

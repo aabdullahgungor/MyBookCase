@@ -39,7 +39,7 @@ func (r ReaderController) Create(c *gin.Context)  {
 	var readerModel models.ReaderModel
 	err = readerModel.Create(&reader)
 	if err != nil {
-		c.IndentedJSON(http.StatusCreated, gin.H{
+		c.IndentedJSON(http.StatusNotAcceptable, gin.H{
 			"error": "cannot create reader: " + err.Error(),
 		})
 		return
@@ -51,6 +51,25 @@ func (r ReaderController) Create(c *gin.Context)  {
 
 func (r ReaderController) Edit(c *gin.Context)  {
 	
+	var reader entities.Reader
+	err := c.ShouldBindJSON(&reader)
+	if err != nil {
+		c.IndentedJSON(400, gin.H{
+			"error": "cannot bind JSON: " + err.Error(),
+		})
+		return
+	}
+
+	var readerModel models.ReaderModel
+	err = readerModel.Edit(&reader)
+	if err != nil {
+		c.IndentedJSON(http.StatusNotAcceptable, gin.H{
+			"error": "cannot edit reader: " + err.Error(),
+		})
+		return
+	}
+
+	c.IndentedJSON(http.StatusAccepted, gin.H{"message":"Reader has been edited","reader_id": reader.ID})
 }
 
 func (r ReaderController) Delete(c *gin.Context)  {

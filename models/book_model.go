@@ -41,3 +41,14 @@ func (bookModel BookModel) Create(book *entities.Book) error {
 		return nil
 	}
 }
+
+
+func (bookModel BookModel) Edit(book *entities.Book) error {
+	db, err := database.GetDB()
+	if err != nil {
+		return err
+	} else {
+		db.Save(&book)
+		return nil
+	}
+}

@@ -39,7 +39,7 @@ func (a AuthorController) Create(c *gin.Context)  {
 	var authorModel models.AuthorModel
 	err = authorModel.Create(&author)
 	if err != nil {
-		c.IndentedJSON(http.StatusCreated, gin.H{
+		c.IndentedJSON(http.StatusNotAcceptable, gin.H{
 			"error": "cannot create author: " + err.Error(),
 		})
 		return
@@ -49,6 +49,25 @@ func (a AuthorController) Create(c *gin.Context)  {
 }
 
 func (a AuthorController) Edit(c *gin.Context)  {
+	var author entities.Author
+	err := c.ShouldBindJSON(&author)
+	if err != nil {
+		c.IndentedJSON(400, gin.H{
+			"error": "cannot bind JSON: " + err.Error(),
+		})
+		return
+	}
+
+	var authorModel models.AuthorModel
+	err = authorModel.Edit(&author)
+	if err != nil {
+		c.IndentedJSON(http.StatusNotAcceptable, gin.H{
+			"error": "cannot edit author: " + err.Error(),
+		})
+		return
+	}
+
+	c.IndentedJSON(http.StatusAccepted, gin.H{"message":"Author has been edited","author_id": author.ID})
 	
 }
 

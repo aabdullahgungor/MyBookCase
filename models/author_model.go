@@ -42,3 +42,13 @@ func (authorModel AuthorModel) Create(author *entities.Author) error {
 		return nil
 	}
 }
+
+func (authorModel AuthorModel) Edit(author *entities.Author) error {
+	db, err := database.GetDB()
+	if err != nil {
+		return err
+	} else {
+		db.Save(&author)
+		return nil
+	}
+}

@@ -40,3 +40,13 @@ func (publisherModel PublisherModel) Create(publisher *entities.Publisher) error
 		return nil
 	}
 }
+
+func (publisherModel PublisherModel) Edit(publisher *entities.Publisher) error {
+	db, err := database.GetDB()
+	if err != nil {
+		return err
+	} else {
+		db.Save(&publisher)
+		return nil
+	}
+}
