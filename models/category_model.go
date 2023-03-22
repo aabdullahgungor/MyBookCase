@@ -14,7 +14,18 @@ func (categoryModel CategoryModel) GetAll() ([]entities.Category, error) {
 		return nil, err
 	} else {
 		var categories []entities.Category
-		db.Preload("Books").Find(&categories)
+		db.Find(&categories)
 		return categories, nil
+	}
+}
+
+func (categoryModel CategoryModel) GetById(id int) (entities.Category, error) {
+	db, err := database.GetDB()
+	if err != nil {
+		return entities.Category{}, err
+	} else {
+		var category entities.Category
+		db.Where("id = ?", id).First(&category)
+		return category, nil
 	}
 }

@@ -20,3 +20,14 @@ func (authorModel AuthorModel) GetAll() ([]entities.Author, error) {
 		return authors, nil
 	}
 }
+
+func (authorModel AuthorModel) GetById(id int) (entities.Author, error) {
+	db, err := database.GetDB()
+	if err != nil {
+		return entities.Author{}, err
+	} else {
+		var author entities.Author
+		db.Where("id = ?", id).First(&author)
+		return author, nil
+	}
+}

@@ -15,8 +15,20 @@ func (bookModel BookModel) GetAll() ([]entities.Book, error) {
 		return nil, err
 	} else {
 		var books []entities.Book
-		db.Preload("Categories").Find(&books)
+		db.Find(&books)
 		return books, nil
+	}
+}
+
+
+func (bookModel BookModel) GetById(id int) (entities.Book, error) {
+	db, err := database.GetDB()
+	if err != nil {
+		return entities.Book{}, err
+	} else {
+		var book entities.Book
+		db.Where("id = ?", id).First(&book)
+		return book, nil
 	}
 }
 

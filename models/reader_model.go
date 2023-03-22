@@ -15,7 +15,18 @@ func (readerModel ReaderModel) GetAll() ([]entities.Reader, error) {
 		return nil, err
 	} else {
 		var readers []entities.Reader
-		db.Preload("Books").Find(&readers)
+		db.Find(&readers)
 		return readers, nil
+	}
+}
+
+func (readerModel ReaderModel) GetById(id int) (entities.Reader, error) {
+	db, err := database.GetDB()
+	if err != nil {
+		return entities.Reader{}, err
+	} else {
+		var reader entities.Reader
+		db.Where("id = ?", id).First(&reader)
+		return reader, nil
 	}
 }

@@ -1,6 +1,7 @@
 package controllers 
 
 import (
+	"strconv"
 	"net/http"
 	"github.com/gin-gonic/gin"
 	"github.com/aabdullahgungor/mybookcase/models"
@@ -16,7 +17,11 @@ func (b BookController) GetAll(c *gin.Context)  {
 }
 
 func (b BookController) GetById(c *gin.Context)  {
-	
+	str_id := c.Param("id")
+	int_id, _ := strconv.Atoi(str_id)
+	var bookModel models.BookModel
+	book, _ := bookModel.GetById(int_id)
+	c.IndentedJSON(http.StatusOK, book)
 }
 
 func (b BookController) Create(c *gin.Context)  {
