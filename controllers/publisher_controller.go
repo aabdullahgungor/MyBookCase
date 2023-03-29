@@ -21,9 +21,21 @@ func (p PublisherController) GetAll(c *gin.Context)  {
 
 func (p PublisherController) GetById(c *gin.Context)  {
 	str_id := c.Param("id")
-	int_id, _ := strconv.Atoi(str_id)
+	int_id, errId := strconv.Atoi(str_id)
+	if errId != nil {
+		c.JSON(400, gin.H{
+			"error": "ID has to be integer",
+		})
+		return
+	}
 	var publisherModel models.PublisherModel
-	publisher, _ := publisherModel.GetById(int_id)
+	publisher, err := publisherModel.GetById(int_id)
+	if err != nil {
+		c.IndentedJSON(http.StatusNotAcceptable, gin.H{
+			"error": err.Error(),
+		})
+	}
+
 	c.Header("Content-Type", "application/json")
 	c.IndentedJSON(http.StatusOK, publisher)
 }
@@ -77,9 +89,9 @@ func (p PublisherController) Edit(c *gin.Context)  {
 func (p PublisherController) Delete(c *gin.Context)  {
 
 	str_id := c.Param("id")
-	int_id, err := strconv.Atoi(str_id)
+	int_id, errId := strconv.Atoi(str_id)
 
-	if err != nil {
+	if errId  != nil {
 		c.JSON(400, gin.H{
 			"error": "ID has to be integer",
 		})
@@ -87,9 +99,8 @@ func (p PublisherController) Delete(c *gin.Context)  {
 	}
 
 	var publisherModel models.PublisherModel
-	publisher, _ := publisherModel.GetById(int_id)
 
-	err = publisherModel.Delete(publisher)
+	err := publisherModel.Delete(int_id)
 
 	if err != nil {
 		c.JSON(400, gin.H{
@@ -99,6 +110,6 @@ func (p PublisherController) Delete(c *gin.Context)  {
 	}
 
 
-	c.IndentedJSON(http.StatusAccepted, gin.H{"message":"Publisher has been deleted","publisher_id": publisher.ID})
+	c.IndentedJSON(http.StatusAccepted, gin.H{"message":"Publisher has been deleted","publisher_id": int_id})
 	
 }

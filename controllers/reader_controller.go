@@ -21,9 +21,20 @@ func (r ReaderController) GetAll(c *gin.Context)  {
 
 func (r ReaderController) GetById(c *gin.Context)  {
 	str_id := c.Param("id")
-	int_id, _ := strconv.Atoi(str_id)
+	int_id, errId := strconv.Atoi(str_id)
+	if errId != nil {
+		c.JSON(400, gin.H{
+			"error": "ID has to be integer",
+		})
+		return
+	}
 	var readerModel models.ReaderModel
-	reader, _ := readerModel.GetById(int_id)
+	reader, err := readerModel.GetById(int_id)
+	if err != nil {
+		c.IndentedJSON(http.StatusNotAcceptable, gin.H{
+			"error": err.Error(),
+		})
+	}
 	c.Header("Content-Type", "application/json")
 	c.IndentedJSON(http.StatusOK, reader)
 }
@@ -78,9 +89,9 @@ func (r ReaderController) Edit(c *gin.Context)  {
 func (r ReaderController) Delete(c *gin.Context)  {
 	
 	str_id := c.Param("id")
-	int_id, err := strconv.Atoi(str_id)
+	int_id, errId := strconv.Atoi(str_id)
 
-	if err != nil {
+	if errId != nil {
 		c.JSON(400, gin.H{
 			"error": "ID has to be integer",
 		})
@@ -88,9 +99,8 @@ func (r ReaderController) Delete(c *gin.Context)  {
 	}
 
 	var readerModel models.ReaderModel
-	reader, _ := readerModel.GetById(int_id)
 
-	err = readerModel.Delete(reader)
+	err := readerModel.Delete(int_id)
 
 	if err != nil {
 		c.JSON(400, gin.H{
@@ -100,5 +110,5 @@ func (r ReaderController) Delete(c *gin.Context)  {
 	}
 
 
-	c.IndentedJSON(http.StatusAccepted, gin.H{"message":"Reader has been deleted","reader_id": reader.ID})
+	c.IndentedJSON(http.StatusAccepted, gin.H{"message":"Reader has been deleted","reader_id": int_id})
 }

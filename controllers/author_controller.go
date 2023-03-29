@@ -21,9 +21,20 @@ func (a AuthorController) GetAll(c *gin.Context)  {
 
 func (a AuthorController) GetById(c *gin.Context)  {
 	str_id := c.Param("id")
-	int_id, _ := strconv.Atoi(str_id)
+	int_id, errId:= strconv.Atoi(str_id)
+	if errId != nil {
+		c.JSON(400, gin.H{
+			"error": "ID has to be integer",
+		})
+		return
+	}
 	var authorModel models.AuthorModel
-	author, _ := authorModel.GetById(int_id)
+	author, err := authorModel.GetById(int_id)
+	if err != nil {
+		c.IndentedJSON(http.StatusNotAcceptable, gin.H{
+			"error": err.Error(),
+		})
+	}
 	c.Header("Content-Type", "application/json")
 	c.IndentedJSON(http.StatusOK, author)
 	
@@ -76,19 +87,16 @@ func (a AuthorController) Edit(c *gin.Context)  {
 
 func (a AuthorController) Delete(c *gin.Context)  {
 	str_id := c.Param("id")
-	int_id, err := strconv.Atoi(str_id)
+	int_id, errId := strconv.Atoi(str_id)
 
-	if err != nil {
+	if errId != nil {
 		c.JSON(400, gin.H{
 			"error": "ID has to be integer",
 		})
 		return
 	}
-
 	var authorModel models.AuthorModel
-	author, _ := authorModel.GetById(int_id)
-
-	err = authorModel.Delete(author)
+	err := authorModel.Delete(int_id)
 
 	if err != nil {
 		c.JSON(400, gin.H{
@@ -98,7 +106,7 @@ func (a AuthorController) Delete(c *gin.Context)  {
 	}
 
 
-	c.IndentedJSON(http.StatusAccepted, gin.H{"message":"Author has been deleted","author_id": author.ID})
+	c.IndentedJSON(http.StatusAccepted, gin.H{"message":"Author has been deleted","author_id": int_id})
 	
 }
 

@@ -87,6 +87,7 @@ func (authorModel AuthorModel) Edit(author *entities.Author) error {
 }
 
 func (authorModel AuthorModel) Delete(id int) error {
+	
 	author, err := authorModel.GetById(id)
 	if err != nil {
 		return err

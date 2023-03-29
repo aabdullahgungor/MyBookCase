@@ -22,9 +22,21 @@ func (C CategoryController) GetAll(c *gin.Context)  {
 
 func (C CategoryController) GetById(c *gin.Context)  {
 	str_id := c.Param("id")
-	int_id, _ := strconv.Atoi(str_id)
+	int_id, errId := strconv.Atoi(str_id)
+	if errId != nil {
+		c.JSON(400, gin.H{
+			"error": "ID has to be integer",
+		})
+		return
+	}
+	
 	var categoryModel models.CategoryModel
-	category, _ := categoryModel.GetById(int_id)
+	category, err := categoryModel.GetById(int_id)
+	if err != nil {
+		c.IndentedJSON(http.StatusNotAcceptable, gin.H{
+			"error": err.Error(),
+		})
+	}
 	c.Header("Content-Type", "application/json")
 	c.IndentedJSON(http.StatusOK, category)
 }
@@ -78,9 +90,9 @@ func (C CategoryController) Edit(c *gin.Context)  {
 func (C CategoryController) Delete(c *gin.Context)  {
 	
 	str_id := c.Param("id")
-	int_id, err := strconv.Atoi(str_id)
+	int_id, errId := strconv.Atoi(str_id)
 
-	if err != nil {
+	if errId != nil {
 		c.JSON(400, gin.H{
 			"error": "ID has to be integer",
 		})
@@ -88,9 +100,8 @@ func (C CategoryController) Delete(c *gin.Context)  {
 	}
 
 	var categoryModel models.CategoryModel
-	category, _ := categoryModel.GetById(int_id)
 
-	err = categoryModel.Delete(category)
+	err := categoryModel.Delete(int_id)
 
 	if err != nil {
 		c.JSON(400, gin.H{
@@ -99,6 +110,5 @@ func (C CategoryController) Delete(c *gin.Context)  {
 		return
 	}
 
-
-	c.IndentedJSON(http.StatusAccepted, gin.H{"message":"Category has been deleted","category_id": category.ID})
+	c.IndentedJSON(http.StatusAccepted, gin.H{"message":"Category has been deleted","category_id": int_id})
 }
