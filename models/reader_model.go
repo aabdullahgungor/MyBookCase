@@ -1,8 +1,17 @@
 package models
 
 import (
+	"errors"
+	"reflect"
+
 	"github.com/aabdullahgungor/mybookcase/database"
 	"github.com/aabdullahgungor/mybookcase/entities"
+)
+
+var (
+	ErrReaderIDIsNotValid    = errors.New("id is not valid")
+	ErrReaderNameIsNotEmpty = errors.New("Reader name cannot be empty")
+	ErrReaderNotFound   = errors.New("the reader cannot be found")
 )
 
 type ReaderModel struct {
@@ -21,6 +30,9 @@ func (readerModel ReaderModel) GetAll() ([]entities.Reader, error) {
 }
 
 func (readerModel ReaderModel) GetById(id int) (entities.Reader, error) {
+	if id <= 0 || reflect.TypeOf(id).Kind() != reflect.Int{
+		return entities.Reader{}, ErrReaderIDIsNotValid
+	}
 	db, err := database.GetDB()
 	if err != nil {
 		return entities.Reader{}, err
@@ -32,31 +44,51 @@ func (readerModel ReaderModel) GetById(id int) (entities.Reader, error) {
 }
 
 func (readerModel ReaderModel) Create(reader *entities.Reader) error {
-	db, err := database.GetDB()
-	if err != nil {
-		return err
-	} else {
-		db.Create(&reader)
-		return nil
-	}
+
+	switch  {
+	case  reader.ID <= 0 || reflect.TypeOf(reader.ID).Kind() != reflect.Int :
+		return ErrReaderIDIsNotValid
+	case  reader.Name == "":
+		return ErrReaderNameIsNotEmpty
+	default:
+		db, err := database.GetDB()
+		if err != nil {
+			return err
+		} else {
+			db.Create(&reader)
+			return nil
+		}
+	}	
+
 }
 
 func (readerModel ReaderModel) Edit(reader *entities.Reader) error {
-	db, err := database.GetDB()
-	if err != nil {
-		return err
-	} else {
-		db.Save(&reader)
-		return nil
+
+	switch  {
+	case  reader.ID <= 0 || reflect.TypeOf(reader.ID).Kind() != reflect.Int :
+		return ErrReaderIDIsNotValid
+	case  reader.Name == "":
+		return ErrReaderNameIsNotEmpty
+	default:
+		db, err := database.GetDB()
+		if err != nil {
+			return err
+		} else {
+			db.Save(&reader)
+			return nil
+		}
 	}
 }
 
-func (readerModel ReaderModel) Delete(reader entities.Reader) error {
+func (readerModel ReaderModel) Delete(id int) error {
+	reader, err := readerModel.GetById(id)
+	if err != nil {
+		return err
+	}
 	db, err := database.GetDB()
 	if err != nil {
 		return err
-	} else {
-		db.Delete(reader)
-		return nil
 	}
+	db.Delete(reader)
+	return nil
 }
