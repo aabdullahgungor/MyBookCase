@@ -1,11 +1,12 @@
 package controllers
 
 import (
-	"strconv"
 	"net/http"
-	"github.com/gin-gonic/gin"
-	"github.com/aabdullahgungor/mybookcase/models"
+	"strconv"
+
 	"github.com/aabdullahgungor/mybookcase/entities"
+	"github.com/aabdullahgungor/mybookcase/models"
+	"github.com/gin-gonic/gin"
 )
 
 type PublisherController struct{
@@ -14,6 +15,7 @@ type PublisherController struct{
 func (p PublisherController) GetAll(c *gin.Context)  {
 	var publisherModel models.PublisherModel
 	publishers, _ := publisherModel.GetAll()
+	c.Header("Content-Type", "application/json")
 	c.IndentedJSON(http.StatusOK, publishers)
 }
 
@@ -22,6 +24,7 @@ func (p PublisherController) GetById(c *gin.Context)  {
 	int_id, _ := strconv.Atoi(str_id)
 	var publisherModel models.PublisherModel
 	publisher, _ := publisherModel.GetById(int_id)
+	c.Header("Content-Type", "application/json")
 	c.IndentedJSON(http.StatusOK, publisher)
 }
 

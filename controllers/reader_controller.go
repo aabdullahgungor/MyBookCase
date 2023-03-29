@@ -1,11 +1,12 @@
 package controllers
 
 import (
-	"strconv"
 	"net/http"
-	"github.com/gin-gonic/gin"
-	"github.com/aabdullahgungor/mybookcase/models"
+	"strconv"
+
 	"github.com/aabdullahgungor/mybookcase/entities"
+	"github.com/aabdullahgungor/mybookcase/models"
+	"github.com/gin-gonic/gin"
 )
 
 type ReaderController struct{
@@ -14,6 +15,7 @@ type ReaderController struct{
 func (r ReaderController) GetAll(c *gin.Context)  {
 	var readerModel models.ReaderModel
 	readers, _ := readerModel.GetAll()
+	c.Header("Content-Type", "application/json")
 	c.IndentedJSON(http.StatusOK, readers)
 }
 
@@ -22,6 +24,7 @@ func (r ReaderController) GetById(c *gin.Context)  {
 	int_id, _ := strconv.Atoi(str_id)
 	var readerModel models.ReaderModel
 	reader, _ := readerModel.GetById(int_id)
+	c.Header("Content-Type", "application/json")
 	c.IndentedJSON(http.StatusOK, reader)
 }
 

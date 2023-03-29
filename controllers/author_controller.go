@@ -1,11 +1,12 @@
 package controllers
 
 import (
-	"strconv"
 	"net/http"
-	"github.com/gin-gonic/gin"
-	"github.com/aabdullahgungor/mybookcase/models"
+	"strconv"
+
 	"github.com/aabdullahgungor/mybookcase/entities"
+	"github.com/aabdullahgungor/mybookcase/models"
+	"github.com/gin-gonic/gin"
 )
 
 type AuthorController struct{
@@ -14,6 +15,7 @@ type AuthorController struct{
 func (a AuthorController) GetAll(c *gin.Context)  {
 	var authorModel models.AuthorModel
 	authors, _ := authorModel.GetAll()
+	c.Header("Content-Type", "application/json")
 	c.IndentedJSON(http.StatusOK, authors)
 }
 
@@ -22,6 +24,7 @@ func (a AuthorController) GetById(c *gin.Context)  {
 	int_id, _ := strconv.Atoi(str_id)
 	var authorModel models.AuthorModel
 	author, _ := authorModel.GetById(int_id)
+	c.Header("Content-Type", "application/json")
 	c.IndentedJSON(http.StatusOK, author)
 	
 }

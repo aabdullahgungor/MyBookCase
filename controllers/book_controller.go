@@ -1,11 +1,12 @@
-package controllers 
+package controllers
 
 import (
-	"strconv"
 	"net/http"
-	"github.com/gin-gonic/gin"
-	"github.com/aabdullahgungor/mybookcase/models"
+	"strconv"
+
 	"github.com/aabdullahgungor/mybookcase/entities"
+	"github.com/aabdullahgungor/mybookcase/models"
+	"github.com/gin-gonic/gin"
 )
 
 type BookController struct{
@@ -14,6 +15,7 @@ type BookController struct{
 func (b BookController) GetAll(c *gin.Context)  {
 	var bookModel models.BookModel
 	books, _ := bookModel.GetAll()
+	c.Header("Content-Type", "application/json")
 	c.IndentedJSON(http.StatusOK, books)	
 }
 
@@ -22,6 +24,7 @@ func (b BookController) GetById(c *gin.Context)  {
 	int_id, _ := strconv.Atoi(str_id)
 	var bookModel models.BookModel
 	book, _ := bookModel.GetById(int_id)
+	c.Header("Content-Type", "application/json")
 	c.IndentedJSON(http.StatusOK, book)
 }
 

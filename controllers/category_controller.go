@@ -1,11 +1,12 @@
 package controllers
 
 import (
-	"strconv"
 	"net/http"
-	"github.com/gin-gonic/gin"
-	"github.com/aabdullahgungor/mybookcase/models"
+	"strconv"
+
 	"github.com/aabdullahgungor/mybookcase/entities"
+	"github.com/aabdullahgungor/mybookcase/models"
+	"github.com/gin-gonic/gin"
 )
 
 
@@ -15,6 +16,7 @@ type CategoryController struct{
 func (C CategoryController) GetAll(c *gin.Context)  {
 	var categoryModel models.CategoryModel
 	categories, _ := categoryModel.GetAll()
+	c.Header("Content-Type", "application/json")
 	c.IndentedJSON(http.StatusOK, categories)	
 }
 
@@ -23,6 +25,7 @@ func (C CategoryController) GetById(c *gin.Context)  {
 	int_id, _ := strconv.Atoi(str_id)
 	var categoryModel models.CategoryModel
 	category, _ := categoryModel.GetById(int_id)
+	c.Header("Content-Type", "application/json")
 	c.IndentedJSON(http.StatusOK, category)
 }
 
