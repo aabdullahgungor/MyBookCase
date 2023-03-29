@@ -3,9 +3,9 @@ package entities
 import "fmt"
 
 type Author struct {
-	ID      uint `gorm:"primary_key, AUTO_INCREMENT"`
-	Name    string `gorm:"column:name"`
-	Books []Book `gorm:"ForeignKey:AuthorID"`
+	ID      uint `gorm:"primary_key, AUTO_INCREMENT" json:"id"`
+	Name    string `gorm:"column:name" json:"name"`
+	Books []Book `gorm:"ForeignKey:AuthorID" json:"author_id"`
 }
 
 func (author *Author) TableName() string {

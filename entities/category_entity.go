@@ -1,14 +1,12 @@
 package entities
 
-import 
-(
+import (
 	"fmt"
-
 )
 
 type Category struct {
-	ID           uint `gorm:"primary_key, AUTO_INCREMENT"`
-	CategoryName string `gorm:"column:category"`
+	ID           uint `gorm:"primary_key, AUTO_INCREMENT" json:"id"`
+	CategoryName string `gorm:"column:category" json:"category_name"`
 	Books []Book `gorm:"many2many:book_has_category"`
 }
 

@@ -1,11 +1,10 @@
 package entities
 
-
 import "fmt"
 
 type Reader struct {
-	ID      uint `gorm:"primary_key, AUTO_INCREMENT"`
-	Name    string `gorm:"column:name"`
+	ID      uint `gorm:"primary_key, AUTO_INCREMENT" json:"id"`
+	Name    string `gorm:"column:name" json:"name"`
 	Books []Book `gorm:"ForeignKey:ReaderID"`
 }
 

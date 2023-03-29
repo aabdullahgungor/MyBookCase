@@ -1,14 +1,12 @@
 package entities
 
-
-import 
-(
+import (
 	"fmt"
 )
 
 type Publisher struct {
-	ID            uint `gorm:"primary_key, AUTO_INCREMENT"`
-	PublisherName string `gorm:"column:publisher"`
+	ID            uint `gorm:"primary_key, AUTO_INCREMENT" json:"id"`
+	PublisherName string `gorm:"column:publisher" json:"publisher_name"`
 	Books []Book `gorm:"many2many:book_has_publisher"`
 }
 
