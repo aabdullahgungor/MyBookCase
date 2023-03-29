@@ -45,12 +45,9 @@ func (readerModel ReaderModel) GetById(id int) (entities.Reader, error) {
 
 func (readerModel ReaderModel) Create(reader *entities.Reader) error {
 
-	switch  {
-	case  reader.ID <= 0 || reflect.TypeOf(reader.ID).Kind() != reflect.Int :
-		return ErrReaderIDIsNotValid
-	case  reader.Name == "":
+	if reader.Name == "" {
 		return ErrReaderNameIsNotEmpty
-	default:
+	} else {
 		db, err := database.GetDB()
 		if err != nil {
 			return err
@@ -58,18 +55,15 @@ func (readerModel ReaderModel) Create(reader *entities.Reader) error {
 			db.Create(&reader)
 			return nil
 		}
-	}	
+	}
 
 }
 
 func (readerModel ReaderModel) Edit(reader *entities.Reader) error {
 
-	switch  {
-	case  reader.ID <= 0 || reflect.TypeOf(reader.ID).Kind() != reflect.Int :
-		return ErrReaderIDIsNotValid
-	case  reader.Name == "":
+	if reader.Name == "" {
 		return ErrReaderNameIsNotEmpty
-	default:
+	} else {
 		db, err := database.GetDB()
 		if err != nil {
 			return err
@@ -78,6 +72,7 @@ func (readerModel ReaderModel) Edit(reader *entities.Reader) error {
 			return nil
 		}
 	}
+
 }
 
 func (readerModel ReaderModel) Delete(id int) error {

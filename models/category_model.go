@@ -44,12 +44,11 @@ func (categoryModel CategoryModel) GetById(id int) (entities.Category, error) {
 }
 
 func (categoryModel CategoryModel) Create(category *entities.Category) error {
-	switch  {
-	case category.ID <= 0 || reflect.TypeOf(category.ID).Kind() != reflect.Int :
-		return ErrCategoryIDIsNotValid
-	case category.CategoryName == "":
+	
+	if category.CategoryName == "" {
 		return ErrCategoryNameIsNotEmpty
-	default:
+	}else {
+
 		db, err := database.GetDB()
 		if err != nil {
 			return err
@@ -57,19 +56,16 @@ func (categoryModel CategoryModel) Create(category *entities.Category) error {
 			db.Create(&category)
 			return nil
 		}
-
-	}	
+	}
 	
 }
 
 func (categoryModel CategoryModel) Edit(category *entities.Category) error {
 
-	switch  {
-	case category.ID <= 0 || reflect.TypeOf(category.ID).Kind() != reflect.Int :
-		return ErrCategoryIDIsNotValid
-	case category.CategoryName == "":
+	if category.CategoryName == "" {
 		return ErrCategoryNameIsNotEmpty
-	default:
+	}else {
+
 		db, err := database.GetDB()
 		if err != nil {
 			return err
@@ -77,7 +73,6 @@ func (categoryModel CategoryModel) Edit(category *entities.Category) error {
 			db.Save(&category)
 			return nil
 		}
-
 	}
 	
 }

@@ -50,13 +50,11 @@ func (bookModel BookModel) GetById(id int) (entities.Book, error) {
 func (bookModel BookModel) Create(book *entities.Book) error {
 
 	switch  {
-	case book.ID <= 0 || reflect.TypeOf(book.ID).Kind() != reflect.Int :
-		return ErrBookIDIsNotValid
 	case book.Name == "":
 		return ErrBookNameIsNotEmpty
-	case book.AuthorID <= 0 || reflect.TypeOf(book.AuthorID).Kind() != reflect.Int:
+	case book.AuthorID <= 0 : // || reflect.TypeOf(book.AuthorID).Kind() != reflect.Int
 		return ErrBookAuthorIDIsNotValid
-	case book.ReaderID <= 0 || reflect.TypeOf(book.ReaderID).Kind() != reflect.Int:
+	case book.ReaderID <= 0 :
 		return ErrBookReaderIDIsNotValid
 	default:
 		db, err := database.GetDB()
@@ -75,13 +73,11 @@ func (bookModel BookModel) Create(book *entities.Book) error {
 func (bookModel BookModel) Edit(book *entities.Book) error {
 
 	switch  {
-	case book.ID <= 0 || reflect.TypeOf(book.ID).Kind() != reflect.Int :
-		return ErrBookIDIsNotValid
 	case book.Name == "":
 		return ErrBookNameIsNotEmpty
-	case book.AuthorID <= 0 || reflect.TypeOf(book.AuthorID).Kind() != reflect.Int:
+	case book.AuthorID <= 0 : // || reflect.TypeOf(book.AuthorID).Kind() != reflect.Int
 		return ErrBookAuthorIDIsNotValid
-	case book.ReaderID <= 0 || reflect.TypeOf(book.ReaderID).Kind() != reflect.Int:
+	case book.ReaderID <= 0 :
 		return ErrBookReaderIDIsNotValid
 	default:
 		db, err := database.GetDB()

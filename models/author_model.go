@@ -49,12 +49,9 @@ func (authorModel AuthorModel) GetById(id int) (entities.Author, error) {
 
 func (authorModel AuthorModel) Create(author *entities.Author) error {
 
-	switch  {
-	case author.ID <= 0 || reflect.TypeOf(author.ID).Kind() != reflect.Int :
-		return ErrAuthorIDIsNotValid
-	case author.Name == "":
+	if author.Name == "" {
 		return ErrAuthorNameIsNotEmpty
-	default:
+	} else {
 		db, err := database.GetDB()
 		if err != nil {
 			return err
@@ -64,16 +61,15 @@ func (authorModel AuthorModel) Create(author *entities.Author) error {
 		}
 
 	}	
+
 }
+
 
 func (authorModel AuthorModel) Edit(author *entities.Author) error {
 	
-	switch  {
-	case author.ID <= 0 || reflect.TypeOf(author.ID).Kind() != reflect.Int:
-		return ErrAuthorIDIsNotValid
-	case author.Name == "":
+	if author.Name == "" {
 		return ErrAuthorNameIsNotEmpty
-	default:
+	} else {
 		db, err := database.GetDB()
 		if err != nil {
 			return err
@@ -82,7 +78,7 @@ func (authorModel AuthorModel) Edit(author *entities.Author) error {
 			return nil
 		}
 
-	}	
+	}
 	
 }
 

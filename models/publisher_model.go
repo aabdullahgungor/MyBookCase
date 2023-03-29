@@ -44,12 +44,10 @@ func (publisherModel PublisherModel) GetById(id int) (entities.Publisher, error)
 }
 
 func (publisherModel PublisherModel) Create(publisher *entities.Publisher) error {
-	switch  {
-	case  publisher.ID <= 0 || reflect.TypeOf(publisher.ID).Kind() != reflect.Int :
-		return ErrPublisherIDIsNotValid
-	case  publisher.PublisherName == "":
+	
+	if  publisher.PublisherName == "" {
 		return ErrPublisherNameIsNotEmpty
-	default:
+	} else {
 		db, err := database.GetDB()
 		if err != nil {
 			return err
@@ -57,18 +55,15 @@ func (publisherModel PublisherModel) Create(publisher *entities.Publisher) error
 			db.Create(&publisher)
 			return nil
 		}
-
-	}		
+	}
+		
 }
 
 func (publisherModel PublisherModel) Edit(publisher *entities.Publisher) error {
 
-	switch  {
-	case  publisher.ID <= 0 || reflect.TypeOf(publisher.ID).Kind() != reflect.Int :
-		return ErrPublisherIDIsNotValid
-	case  publisher.PublisherName == "":
+	if  publisher.PublisherName == "" {
 		return ErrPublisherNameIsNotEmpty
-	default:
+	} else {
 		db, err := database.GetDB()
 		if err != nil {
 			return err
@@ -76,7 +71,8 @@ func (publisherModel PublisherModel) Edit(publisher *entities.Publisher) error {
 			db.Save(&publisher)
 			return nil
 		}
-	}	
+
+	}
 }
 
 func (publisherModel PublisherModel) Delete(id int) error {
