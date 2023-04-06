@@ -1,9 +1,10 @@
-package server 
+package server
 
 import (
 	"log"
-	"github.com/gin-gonic/gin"
+
 	"github.com/aabdullahgungor/mybookcase/router"
+	"github.com/gin-gonic/gin"
 )
 
 type Server struct {
@@ -13,7 +14,7 @@ type Server struct {
 
 func NewServer() Server {
 	return Server{
-		port: "8000",
+		port: "9090",
 		server: gin.Default(),
 	}
 }
