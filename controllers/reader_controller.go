@@ -51,16 +51,23 @@ func (r ReaderController) Create(c *gin.Context) {
 		return
 	}
 
-	// var readerModel models.ReaderModel
-	// err = readerModel.Create(&reader)
-	// if err != nil {
-	// 	c.IndentedJSON(http.StatusNotAcceptable, gin.H{
-	// 		"error": "cannot create reader: " + err.Error(),
-	// 	})
-	// 	return
-	// }
+	err = reader.HashPassword(reader.Password)
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		c.Abort()
+		return
+	}
 
-	// c.IndentedJSON(http.StatusCreated, gin.H{"message": "Reader has been created", "reader_id": reader.ID})
+	var readerModel models.ReaderModel
+	err = readerModel.Create(&reader)
+	if err != nil {
+		c.IndentedJSON(http.StatusNotAcceptable, gin.H{
+			"error": "cannot create reader: " + err.Error(),
+		})
+		return
+	}
+
+	c.IndentedJSON(http.StatusCreated, gin.H{"message": "Reader has been created", "reader_id": reader.ID, "email": reader.Email, "name": reader.Name})
 
 }
 
