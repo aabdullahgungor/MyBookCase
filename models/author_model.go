@@ -9,14 +9,13 @@ import (
 )
 
 var (
-	ErrAuthorIDIsNotValid    = errors.New("id is not valid")
-	ErrAuthorNameIsNotEmpty = errors.New("Author name cannot be empty")
-	ErrAuthorNotFound   = errors.New("the author cannot be found")
+	ErrAuthorIDIsNotValid   = errors.New("id is not valid")
+	ErrAuthorNameIsNotEmpty = errors.New("author name cannot be empty")
+	ErrAuthorNotFound       = errors.New("the author cannot be found")
 )
 
 type AuthorModel struct {
 }
-
 
 func (authorModel AuthorModel) GetAll() ([]entities.Author, error) {
 	db, err := database.GetDB()
@@ -24,7 +23,7 @@ func (authorModel AuthorModel) GetAll() ([]entities.Author, error) {
 		return nil, err
 	} else {
 		var authors []entities.Author
-		db.Find(&authors)//db.Preload("Books").Find(&authors)
+		db.Find(&authors) //db.Preload("Books").Find(&authors)
 		//db.Table("author").Select("id,name").Scan(&authors)
 		return authors, nil
 	}
@@ -32,20 +31,19 @@ func (authorModel AuthorModel) GetAll() ([]entities.Author, error) {
 
 func (authorModel AuthorModel) GetById(id int) (entities.Author, error) {
 
-	if id <= 0 || reflect.TypeOf(id).Kind() != reflect.Int{
+	if id <= 0 || reflect.TypeOf(id).Kind() != reflect.Int {
 		return entities.Author{}, ErrAuthorIDIsNotValid
 	}
 
 	db, err := database.GetDB()
 	if err != nil {
 		return entities.Author{}, err
-	} 
+	}
 	var author entities.Author
 	db.Where("id = ?", id).First(&author)
 	return author, nil
-	
-}
 
+}
 
 func (authorModel AuthorModel) Create(author *entities.Author) error {
 
@@ -60,13 +58,12 @@ func (authorModel AuthorModel) Create(author *entities.Author) error {
 			return nil
 		}
 
-	}	
+	}
 
 }
 
-
 func (authorModel AuthorModel) Edit(author *entities.Author) error {
-	
+
 	if author.Name == "" {
 		return ErrAuthorNameIsNotEmpty
 	} else {
@@ -79,11 +76,11 @@ func (authorModel AuthorModel) Edit(author *entities.Author) error {
 		}
 
 	}
-	
+
 }
 
 func (authorModel AuthorModel) Delete(id int) error {
-	
+
 	author, err := authorModel.GetById(id)
 	if err != nil {
 		return err

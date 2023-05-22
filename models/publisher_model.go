@@ -9,13 +9,12 @@ import (
 )
 
 var (
-	ErrPublisherIDIsNotValid    = errors.New("id is not valid")
-	ErrPublisherNameIsNotEmpty = errors.New("Publisher name cannot be empty")
-	ErrPublisherNotFound   = errors.New("the publisher cannot be found")
+	ErrPublisherIDIsNotValid   = errors.New("id is not valid")
+	ErrPublisherNameIsNotEmpty = errors.New("publisher name cannot be empty")
+	ErrPublisherNotFound       = errors.New("the publisher cannot be found")
 )
 
 type PublisherModel struct {
-	
 }
 
 func (publisherModel PublisherModel) GetAll() ([]entities.Publisher, error) {
@@ -30,7 +29,7 @@ func (publisherModel PublisherModel) GetAll() ([]entities.Publisher, error) {
 }
 
 func (publisherModel PublisherModel) GetById(id int) (entities.Publisher, error) {
-	if id <= 0 || reflect.TypeOf(id).Kind() != reflect.Int{
+	if id <= 0 || reflect.TypeOf(id).Kind() != reflect.Int {
 		return entities.Publisher{}, ErrPublisherIDIsNotValid
 	}
 	db, err := database.GetDB()
@@ -44,8 +43,8 @@ func (publisherModel PublisherModel) GetById(id int) (entities.Publisher, error)
 }
 
 func (publisherModel PublisherModel) Create(publisher *entities.Publisher) error {
-	
-	if  publisher.PublisherName == "" {
+
+	if publisher.PublisherName == "" {
 		return ErrPublisherNameIsNotEmpty
 	} else {
 		db, err := database.GetDB()
@@ -56,12 +55,12 @@ func (publisherModel PublisherModel) Create(publisher *entities.Publisher) error
 			return nil
 		}
 	}
-		
+
 }
 
 func (publisherModel PublisherModel) Edit(publisher *entities.Publisher) error {
 
-	if  publisher.PublisherName == "" {
+	if publisher.PublisherName == "" {
 		return ErrPublisherNameIsNotEmpty
 	} else {
 		db, err := database.GetDB()

@@ -9,16 +9,15 @@ import (
 )
 
 var (
-	ErrBookIDIsNotValid    = errors.New("id is not valid")
-	ErrBookNameIsNotEmpty = errors.New("Book name cannot be empty")
-	ErrBookNotFound   = errors.New("the book cannot be found")
-	ErrBookAuthorIDIsNotValid = errors.New("Author_id is not valid")
-	ErrBookReaderIDIsNotValid = errors.New("Reader_id is not valid")
+	ErrBookIDIsNotValid       = errors.New("id is not valid")
+	ErrBookNameIsNotEmpty     = errors.New("book name cannot be empty")
+	ErrBookNotFound           = errors.New("the book cannot be found")
+	ErrBookAuthorIDIsNotValid = errors.New("author_id is not valid")
+	ErrBookReaderIDIsNotValid = errors.New("reader_id is not valid")
 )
 
 type BookModel struct {
 }
-
 
 func (bookModel BookModel) GetAll() ([]entities.Book, error) {
 	db, err := database.GetDB()
@@ -31,9 +30,8 @@ func (bookModel BookModel) GetAll() ([]entities.Book, error) {
 	}
 }
 
-
 func (bookModel BookModel) GetById(id int) (entities.Book, error) {
-	if id <= 0 || reflect.TypeOf(id).Kind() != reflect.Int{
+	if id <= 0 || reflect.TypeOf(id).Kind() != reflect.Int {
 		return entities.Book{}, ErrBookIDIsNotValid
 	}
 
@@ -49,12 +47,12 @@ func (bookModel BookModel) GetById(id int) (entities.Book, error) {
 
 func (bookModel BookModel) Create(book *entities.Book) error {
 
-	switch  {
+	switch {
 	case book.Name == "":
 		return ErrBookNameIsNotEmpty
-	case book.AuthorID <= 0 : // || reflect.TypeOf(book.AuthorID).Kind() != reflect.Int
+	case book.AuthorID <= 0: // || reflect.TypeOf(book.AuthorID).Kind() != reflect.Int
 		return ErrBookAuthorIDIsNotValid
-	case book.ReaderID <= 0 :
+	case book.ReaderID <= 0:
 		return ErrBookReaderIDIsNotValid
 	default:
 		db, err := database.GetDB()
@@ -66,18 +64,17 @@ func (bookModel BookModel) Create(book *entities.Book) error {
 		}
 
 	}
-	
-}
 
+}
 
 func (bookModel BookModel) Edit(book *entities.Book) error {
 
-	switch  {
+	switch {
 	case book.Name == "":
 		return ErrBookNameIsNotEmpty
-	case book.AuthorID <= 0 : // || reflect.TypeOf(book.AuthorID).Kind() != reflect.Int
+	case book.AuthorID <= 0: // || reflect.TypeOf(book.AuthorID).Kind() != reflect.Int
 		return ErrBookAuthorIDIsNotValid
-	case book.ReaderID <= 0 :
+	case book.ReaderID <= 0:
 		return ErrBookReaderIDIsNotValid
 	default:
 		db, err := database.GetDB()
@@ -88,7 +85,7 @@ func (bookModel BookModel) Edit(book *entities.Book) error {
 			return nil
 		}
 	}
-	
+
 }
 
 func (bookModel BookModel) Delete(id int) error {

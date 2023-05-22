@@ -9,9 +9,9 @@ import (
 )
 
 var (
-	ErrCategoryIDIsNotValid    = errors.New("id is not valid")
-	ErrCategoryNameIsNotEmpty = errors.New("Category name cannot be empty")
-	ErrCategoryNotFound   = errors.New("the category cannot be found")
+	ErrCategoryIDIsNotValid   = errors.New("id is not valid")
+	ErrCategoryNameIsNotEmpty = errors.New("category name cannot be empty")
+	ErrCategoryNotFound       = errors.New("the category cannot be found")
 )
 
 type CategoryModel struct {
@@ -29,7 +29,7 @@ func (categoryModel CategoryModel) GetAll() ([]entities.Category, error) {
 }
 
 func (categoryModel CategoryModel) GetById(id int) (entities.Category, error) {
-	if id <= 0 || reflect.TypeOf(id).Kind() != reflect.Int{
+	if id <= 0 || reflect.TypeOf(id).Kind() != reflect.Int {
 		return entities.Category{}, ErrCategoryIDIsNotValid
 	}
 
@@ -44,10 +44,10 @@ func (categoryModel CategoryModel) GetById(id int) (entities.Category, error) {
 }
 
 func (categoryModel CategoryModel) Create(category *entities.Category) error {
-	
+
 	if category.CategoryName == "" {
 		return ErrCategoryNameIsNotEmpty
-	}else {
+	} else {
 
 		db, err := database.GetDB()
 		if err != nil {
@@ -57,14 +57,14 @@ func (categoryModel CategoryModel) Create(category *entities.Category) error {
 			return nil
 		}
 	}
-	
+
 }
 
 func (categoryModel CategoryModel) Edit(category *entities.Category) error {
 
 	if category.CategoryName == "" {
 		return ErrCategoryNameIsNotEmpty
-	}else {
+	} else {
 
 		db, err := database.GetDB()
 		if err != nil {
@@ -74,7 +74,7 @@ func (categoryModel CategoryModel) Edit(category *entities.Category) error {
 			return nil
 		}
 	}
-	
+
 }
 
 func (categoryModel CategoryModel) Delete(id int) error {

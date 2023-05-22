@@ -10,7 +10,7 @@ import (
 
 var (
 	ErrReaderIDIsNotValid   = errors.New("id is not valid")
-	ErrReaderNameIsNotEmpty = errors.New("Reader name cannot be empty")
+	ErrReaderNameIsNotEmpty = errors.New("reader name cannot be empty")
 	ErrReaderNotFound       = errors.New("the reader cannot be found")
 )
 
