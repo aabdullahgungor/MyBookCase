@@ -9,14 +9,24 @@ import (
 )
 
 var (
-	ErrReaderIDIsNotValid    = errors.New("id is not valid")
+	ErrReaderIDIsNotValid   = errors.New("id is not valid")
 	ErrReaderNameIsNotEmpty = errors.New("Reader name cannot be empty")
-	ErrReaderNotFound   = errors.New("the reader cannot be found")
+	ErrReaderNotFound       = errors.New("the reader cannot be found")
 )
 
 type ReaderModel struct {
 }
 
+type Authentication struct { // Authentication is for login data.
+	Email    string `json:"email"`
+	Password string `json:"password"`
+}
+
+type Token struct { // Token is for storing token information for correct login credentials.
+	Role        string `json:"role"`
+	Email       string `json:"email"`
+	TokenString string `json:"token"`
+}
 
 func (readerModel ReaderModel) GetAll() ([]entities.Reader, error) {
 	db, err := database.GetDB()
@@ -30,7 +40,7 @@ func (readerModel ReaderModel) GetAll() ([]entities.Reader, error) {
 }
 
 func (readerModel ReaderModel) GetById(id int) (entities.Reader, error) {
-	if id <= 0 || reflect.TypeOf(id).Kind() != reflect.Int{
+	if id <= 0 || reflect.TypeOf(id).Kind() != reflect.Int {
 		return entities.Reader{}, ErrReaderIDIsNotValid
 	}
 	db, err := database.GetDB()
