@@ -17,17 +17,6 @@ var (
 type ReaderModel struct {
 }
 
-type Authentication struct { // Authentication is for login data.
-	Email    string `json:"email"`
-	Password string `json:"password"`
-}
-
-type Token struct { // Token is for storing token information for correct login credentials.
-	Role        string `json:"role"`
-	Email       string `json:"email"`
-	TokenString string `json:"token"`
-}
-
 func (readerModel ReaderModel) GetAll() ([]entities.Reader, error) {
 	db, err := database.GetDB()
 	if err != nil {
