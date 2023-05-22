@@ -9,17 +9,17 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-type ReaderController struct{
+type ReaderController struct {
 }
 
-func (r ReaderController) GetAll(c *gin.Context)  {
+func (r ReaderController) GetAll(c *gin.Context) {
 	var readerModel models.ReaderModel
 	readers, _ := readerModel.GetAll()
 	c.Header("Content-Type", "application/json")
 	c.IndentedJSON(http.StatusOK, readers)
 }
 
-func (r ReaderController) GetById(c *gin.Context)  {
+func (r ReaderController) GetById(c *gin.Context) {
 	str_id := c.Param("id")
 	int_id, errId := strconv.Atoi(str_id)
 	if errId != nil {
@@ -39,7 +39,7 @@ func (r ReaderController) GetById(c *gin.Context)  {
 	c.IndentedJSON(http.StatusOK, reader)
 }
 
-func (r ReaderController) Create(c *gin.Context)  {
+func (r ReaderController) Create(c *gin.Context) {
 
 	var reader entities.Reader
 	err := c.ShouldBindJSON(&reader)
@@ -47,24 +47,25 @@ func (r ReaderController) Create(c *gin.Context)  {
 		c.IndentedJSON(400, gin.H{
 			"error": "cannot bind JSON: " + err.Error(),
 		})
+		c.Abort()
 		return
 	}
 
-	var readerModel models.ReaderModel
-	err = readerModel.Create(&reader)
-	if err != nil {
-		c.IndentedJSON(http.StatusNotAcceptable, gin.H{
-			"error": "cannot create reader: " + err.Error(),
-		})
-		return
-	}
+	// var readerModel models.ReaderModel
+	// err = readerModel.Create(&reader)
+	// if err != nil {
+	// 	c.IndentedJSON(http.StatusNotAcceptable, gin.H{
+	// 		"error": "cannot create reader: " + err.Error(),
+	// 	})
+	// 	return
+	// }
 
-	c.IndentedJSON(http.StatusCreated, gin.H{"message":"Reader has been created","reader_id": reader.ID})
-	
+	// c.IndentedJSON(http.StatusCreated, gin.H{"message": "Reader has been created", "reader_id": reader.ID})
+
 }
 
-func (r ReaderController) Edit(c *gin.Context)  {
-	
+func (r ReaderController) Edit(c *gin.Context) {
+
 	var reader entities.Reader
 	err := c.ShouldBindJSON(&reader)
 	if err != nil {
@@ -83,11 +84,11 @@ func (r ReaderController) Edit(c *gin.Context)  {
 		return
 	}
 
-	c.IndentedJSON(http.StatusAccepted, gin.H{"message":"Reader has been edited","reader_id": reader.ID})
+	c.IndentedJSON(http.StatusAccepted, gin.H{"message": "Reader has been edited", "reader_id": reader.ID})
 }
 
-func (r ReaderController) Delete(c *gin.Context)  {
-	
+func (r ReaderController) Delete(c *gin.Context) {
+
 	str_id := c.Param("id")
 	int_id, errId := strconv.Atoi(str_id)
 
@@ -109,6 +110,5 @@ func (r ReaderController) Delete(c *gin.Context)  {
 		return
 	}
 
-
-	c.IndentedJSON(http.StatusAccepted, gin.H{"message":"Reader has been deleted","reader_id": int_id})
+	c.IndentedJSON(http.StatusAccepted, gin.H{"message": "Reader has been deleted", "reader_id": int_id})
 }
