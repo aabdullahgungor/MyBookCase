@@ -51,7 +51,7 @@ func ConfigRoutes(router *gin.Engine) *gin.Engine {
 			readers.DELETE("/:id", controllers.ReaderController{}.Delete)
 		}
 
-		main.POST("token", controllers.GenerateToken)
+		main.POST("/token", controllers.GenerateToken)
 		secured := main.Group("/secured").Use(middleware.Auth())
 		{
 			secured.GET("/ping", controllers.Ping)
