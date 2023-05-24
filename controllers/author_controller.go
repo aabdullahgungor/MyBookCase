@@ -12,6 +12,13 @@ import (
 type AuthorController struct {
 }
 
+// GetAuthors            godoc
+// @Summary		Get authors array
+// @Description	Responds with the list of all authors as JSON.
+// @Tags			authors
+// @Produce		json
+// @Success		200	{object}	entities.Author
+// @Router			/authors [get]
 func (a AuthorController) GetAll(c *gin.Context) {
 	var authorModel models.AuthorModel
 	authors, _ := authorModel.GetAll()
@@ -19,6 +26,16 @@ func (a AuthorController) GetAll(c *gin.Context) {
 	c.IndentedJSON(http.StatusOK, authors)
 }
 
+// GetAuthor           godoc
+// @Summary		Get single author by id
+// @Description	Returns the author whose id value matches the id.
+// @Tags			authors
+// @Produce		json
+// @Param			id path	string true "search author by id"
+// @Success		200		{object}	entities.Author
+// @Failure 	400     error message
+// @Failure 	406     error message
+// @Router			/authors/{id} [get]
 func (a AuthorController) GetById(c *gin.Context) {
 	str_id := c.Param("id")
 	int_id, errId := strconv.Atoi(str_id)
@@ -40,6 +57,16 @@ func (a AuthorController) GetById(c *gin.Context) {
 
 }
 
+// CreateAuthor           godoc
+// @Summary		Add a new author
+// @Description	Takes a author JSON and store in DB. Return saved JSON.
+// @Tags			authors
+// @Produce		json
+// @Param			author body	entities.Author	true "Author JSON"
+// @Success		200		{object}	response.Response{}
+// @Failure 	400     error message
+// @Failure 	406     error message
+// @Router			/authors [post]
 func (a AuthorController) Create(c *gin.Context) {
 	var author entities.Author
 	err := c.ShouldBindJSON(&author)
@@ -62,6 +89,16 @@ func (a AuthorController) Create(c *gin.Context) {
 	c.IndentedJSON(http.StatusCreated, gin.H{"message": "Author has been created", "author_id": author.ID})
 }
 
+// EditAuthor           godoc
+// @Summary		Edit an author
+// @Description	Takes a author JSON and edit an author in DB. Return saved JSON.
+// @Tags			authors
+// @Produce		json
+// @Param			author body	entities.Author	true "Author JSON"
+// @Success		200		{object}	response.Response{}
+// @Failure 	400     error message
+// @Failure 	406     error message
+// @Router			/authors [put]
 func (a AuthorController) Edit(c *gin.Context) {
 	var author entities.Author
 	err := c.ShouldBindJSON(&author)
@@ -85,6 +122,16 @@ func (a AuthorController) Edit(c *gin.Context) {
 
 }
 
+// DeleteAuthor           godoc
+// @Summary		Delete an author
+// @Description	Remove an author from DB by id.
+// @Tags			authors
+// @Produce		json
+// @Param			id path	string true "delete author by id"
+// @Success		200		{object}	response.Response{}
+// @Failure 	400     error message
+// @Failure 	406     error message
+// @Router			/authors/{id} [delete]
 func (a AuthorController) Delete(c *gin.Context) {
 	str_id := c.Param("id")
 	int_id, errId := strconv.Atoi(str_id)

@@ -1,4 +1,158 @@
+definitions:
+  entities.Author:
+    properties:
+      author_id:
+        items:
+          $ref: '#/definitions/entities.Book'
+        type: array
+      id:
+        type: integer
+      name:
+        type: string
+    type: object
+  entities.Book:
+    properties:
+      author:
+        $ref: '#/definitions/entities.Author'
+      author_id:
+        type: integer
+      categories:
+        items:
+          $ref: '#/definitions/entities.Category'
+        type: array
+      description:
+        type: string
+      edition:
+        type: integer
+      id:
+        type: integer
+      image_url:
+        type: string
+      isbn:
+        description: Export a field by starting it with an uppercase letter.
+        type: string
+      language:
+        type: string
+      name:
+        type: string
+      published_date:
+        type: string
+      publishers:
+        items:
+          $ref: '#/definitions/entities.Publisher'
+        type: array
+      reader:
+        $ref: '#/definitions/entities.Reader'
+      reader_id:
+        type: integer
+      total_pages:
+        type: integer
+    type: object
+  entities.Category:
+    properties:
+      books:
+        items:
+          $ref: '#/definitions/entities.Book'
+        type: array
+      category_name:
+        type: string
+      id:
+        type: integer
+    type: object
+  entities.Publisher:
+    properties:
+      books:
+        items:
+          $ref: '#/definitions/entities.Book'
+        type: array
+      id:
+        type: integer
+      publisher_name:
+        type: string
+    type: object
+  entities.Reader:
+    properties:
+      books:
+        items:
+          $ref: '#/definitions/entities.Book'
+        type: array
+      email:
+        type: string
+      id:
+        type: integer
+      name:
+        type: string
+      password:
+        type: string
+    type: object
 info:
   contact: {}
-paths: {}
+paths:
+  /authors:
+    get:
+      description: Responds with the list of all authors as JSON.
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/entities.Author'
+      summary: Get authors array
+      tags:
+      - authors
+    post:
+      description: Takes a author JSON and store in DB. Return saved JSON.
+      parameters:
+      - description: Author JSON
+        in: body
+        name: author
+        required: true
+        schema:
+          $ref: '#/definitions/entities.Author'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/entities.Author'
+        "400":
+          description: Bad Request
+          schema:
+            type: error
+        "406":
+          description: Not Acceptable
+          schema:
+            type: error
+      summary: Add a new author
+      tags:
+      - authors
+  /authors/{id}:
+    get:
+      description: Returns the author whose id value matches the id.
+      parameters:
+      - description: search author by id
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/entities.Author'
+        "400":
+          description: Bad Request
+          schema:
+            type: error
+        "406":
+          description: Not Acceptable
+          schema:
+            type: error
+      summary: Get single author by id
+      tags:
+      - authors
 swagger: "2.0"
