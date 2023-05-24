@@ -2,11 +2,11 @@ package router
 
 import (
 	"github.com/aabdullahgungor/mybookcase/controllers"
+	"github.com/aabdullahgungor/mybookcase/docs"
 	"github.com/aabdullahgungor/mybookcase/middleware"
 	"github.com/gin-gonic/gin"
 	swaggerFiles "github.com/swaggo/files"
 	ginSwagger "github.com/swaggo/gin-swagger"
-	"github.com/swaggo/swag/example/basic/docs"
 )
 
 func ConfigRoutes(router *gin.Engine) *gin.Engine {
@@ -62,10 +62,10 @@ func ConfigRoutes(router *gin.Engine) *gin.Engine {
 
 		// programmatically set swagger info
 		docs.SwaggerInfo.Title = "Swagger Example API"
-		docs.SwaggerInfo.Description = "This is a sample server AlbumStore server."
+		docs.SwaggerInfo.Description = "This is a sample server MyBookCase server."
 		docs.SwaggerInfo.Version = "1.0"
 		docs.SwaggerInfo.Host = ""
-		docs.SwaggerInfo.BasePath = ""
+		docs.SwaggerInfo.BasePath = "/api/v1"
 		docs.SwaggerInfo.Schemes = []string{"http", "https"}
 		// add swagger
 		main.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
