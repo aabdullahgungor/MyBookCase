@@ -9,19 +9,19 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-type AuthorController struct{
+type AuthorController struct {
 }
 
-func (a AuthorController) GetAll(c *gin.Context)  {
+func (a AuthorController) GetAll(c *gin.Context) {
 	var authorModel models.AuthorModel
 	authors, _ := authorModel.GetAll()
 	c.Header("Content-Type", "application/json")
 	c.IndentedJSON(http.StatusOK, authors)
 }
 
-func (a AuthorController) GetById(c *gin.Context)  {
+func (a AuthorController) GetById(c *gin.Context) {
 	str_id := c.Param("id")
-	int_id, errId:= strconv.Atoi(str_id)
+	int_id, errId := strconv.Atoi(str_id)
 	if errId != nil {
 		c.JSON(400, gin.H{
 			"error": "ID has to be integer",
@@ -37,10 +37,10 @@ func (a AuthorController) GetById(c *gin.Context)  {
 	}
 	c.Header("Content-Type", "application/json")
 	c.IndentedJSON(http.StatusOK, author)
-	
+
 }
 
-func (a AuthorController) Create(c *gin.Context)  {
+func (a AuthorController) Create(c *gin.Context) {
 	var author entities.Author
 	err := c.ShouldBindJSON(&author)
 	if err != nil {
@@ -59,10 +59,10 @@ func (a AuthorController) Create(c *gin.Context)  {
 		return
 	}
 
-	c.IndentedJSON(http.StatusCreated, gin.H{"message":"Author has been created","author_id": author.ID})
+	c.IndentedJSON(http.StatusCreated, gin.H{"message": "Author has been created", "author_id": author.ID})
 }
 
-func (a AuthorController) Edit(c *gin.Context)  {
+func (a AuthorController) Edit(c *gin.Context) {
 	var author entities.Author
 	err := c.ShouldBindJSON(&author)
 	if err != nil {
@@ -81,11 +81,11 @@ func (a AuthorController) Edit(c *gin.Context)  {
 		return
 	}
 
-	c.IndentedJSON(http.StatusAccepted, gin.H{"message":"Author has been edited","author_id": author.ID})
-	
+	c.IndentedJSON(http.StatusAccepted, gin.H{"message": "Author has been edited", "author_id": author.ID})
+
 }
 
-func (a AuthorController) Delete(c *gin.Context)  {
+func (a AuthorController) Delete(c *gin.Context) {
 	str_id := c.Param("id")
 	int_id, errId := strconv.Atoi(str_id)
 
@@ -105,8 +105,6 @@ func (a AuthorController) Delete(c *gin.Context)  {
 		return
 	}
 
+	c.IndentedJSON(http.StatusAccepted, gin.H{"message": "Author has been deleted", "author_id": int_id})
 
-	c.IndentedJSON(http.StatusAccepted, gin.H{"message":"Author has been deleted","author_id": int_id})
-	
 }
-
