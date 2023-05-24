@@ -9,17 +9,17 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-type BookController struct{
+type BookController struct {
 }
 
-func (b BookController) GetAll(c *gin.Context)  {
+func (b BookController) GetAll(c *gin.Context) {
 	var bookModel models.BookModel
 	books, _ := bookModel.GetAll()
 	c.Header("Content-Type", "application/json")
-	c.IndentedJSON(http.StatusOK, books)	
+	c.IndentedJSON(http.StatusOK, books)
 }
 
-func (b BookController) GetById(c *gin.Context)  {
+func (b BookController) GetById(c *gin.Context) {
 	str_id := c.Param("id")
 	int_id, errId := strconv.Atoi(str_id)
 	if errId != nil {
@@ -28,7 +28,7 @@ func (b BookController) GetById(c *gin.Context)  {
 		})
 		return
 	}
-	
+
 	var bookModel models.BookModel
 	book, err := bookModel.GetById(int_id)
 	if err != nil {
@@ -40,7 +40,7 @@ func (b BookController) GetById(c *gin.Context)  {
 	c.IndentedJSON(http.StatusOK, book)
 }
 
-func (b BookController) Create(c *gin.Context)  {
+func (b BookController) Create(c *gin.Context) {
 	var book entities.Book
 	err := c.ShouldBindJSON(&book)
 	if err != nil {
@@ -59,11 +59,11 @@ func (b BookController) Create(c *gin.Context)  {
 		return
 	}
 
-	c.IndentedJSON(http.StatusCreated, gin.H{"message":"Book has been created","book_id": book.ID})
-	
+	c.IndentedJSON(http.StatusCreated, gin.H{"message": "Book has been created", "book_id": book.ID})
+
 }
 
-func (b BookController) Edit(c *gin.Context)  {
+func (b BookController) Edit(c *gin.Context) {
 	var book entities.Book
 	err := c.ShouldBindJSON(&book)
 	if err != nil {
@@ -82,12 +82,12 @@ func (b BookController) Edit(c *gin.Context)  {
 		return
 	}
 
-	c.IndentedJSON(http.StatusAccepted, gin.H{"message":"Book has been edited","book_id": book.ID})
-	
+	c.IndentedJSON(http.StatusAccepted, gin.H{"message": "Book has been edited", "book_id": book.ID})
+
 }
 
-func (b BookController) Delete(c *gin.Context)  {
-	
+func (b BookController) Delete(c *gin.Context) {
+
 	str_id := c.Param("id")
 	int_id, errId := strconv.Atoi(str_id)
 
@@ -109,6 +109,5 @@ func (b BookController) Delete(c *gin.Context)  {
 		return
 	}
 
-
-	c.IndentedJSON(http.StatusAccepted, gin.H{"message":"Book has been deleted","book_id": int_id})
+	c.IndentedJSON(http.StatusAccepted, gin.H{"message": "Book has been deleted", "book_id": int_id})
 }

@@ -91,7 +91,7 @@ func (a AuthorController) Create(c *gin.Context) {
 
 // EditAuthor           godoc
 // @Summary		Edit an author
-// @Description	Takes a author JSON and edit an author in DB. Return saved JSON.
+// @Description	Takes a author JSON and edit an in DB. Return saved JSON.
 // @Tags			authors
 // @Produce		json
 // @Param			author body	entities.Author	true "Author JSON"
