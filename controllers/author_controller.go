@@ -63,7 +63,7 @@ func (a AuthorController) GetById(c *gin.Context) {
 // @Tags			authors
 // @Produce		json
 // @Param			author body	entities.Author	true "Author JSON"
-// @Success		200		{object}	response.Response{}
+// @Success		200		{object}	entities.Author
 // @Failure 	400     error message
 // @Failure 	406     error message
 // @Router			/authors [post]
@@ -95,7 +95,7 @@ func (a AuthorController) Create(c *gin.Context) {
 // @Tags			authors
 // @Produce		json
 // @Param			author body	entities.Author	true "Author JSON"
-// @Success		200		{object}	response.Response{}
+// @Success		200		{object}	entities.Author
 // @Failure 	400     error message
 // @Failure 	406     error message
 // @Router			/authors [put]
@@ -128,7 +128,7 @@ func (a AuthorController) Edit(c *gin.Context) {
 // @Tags			authors
 // @Produce		json
 // @Param			id path	string true "delete author by id"
-// @Success		200		{object}	response.Response{}
+// @Success		200		{object}	entities.Author
 // @Failure 	400     error message
 // @Failure 	406     error message
 // @Router			/authors/{id} [delete]

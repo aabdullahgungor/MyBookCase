@@ -128,7 +128,60 @@ paths:
       summary: Add a new author
       tags:
       - authors
+    put:
+      description: Takes a author JSON and edit an in DB. Return saved JSON.
+      parameters:
+      - description: Author JSON
+        in: body
+        name: author
+        required: true
+        schema:
+          $ref: '#/definitions/entities.Author'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/entities.Author'
+        "400":
+          description: Bad Request
+          schema:
+            type: error
+        "406":
+          description: Not Acceptable
+          schema:
+            type: error
+      summary: Edit an author
+      tags:
+      - authors
   /authors/{id}:
+    delete:
+      description: Remove an author from DB by id.
+      parameters:
+      - description: delete author by id
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/entities.Author'
+        "400":
+          description: Bad Request
+          schema:
+            type: error
+        "406":
+          description: Not Acceptable
+          schema:
+            type: error
+      summary: Delete an author
+      tags:
+      - authors
     get:
       description: Returns the author whose id value matches the id.
       parameters:
