@@ -448,4 +448,124 @@ paths:
       summary: Get single category by id
       tags:
       - categories
+  /publishers:
+    get:
+      description: Responds with the list of all publishers as JSON.
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/entities.Publisher'
+      summary: Get publishers array
+      tags:
+      - publishers
+    post:
+      description: Takes a publisher JSON and store in DB. Return saved JSON.
+      parameters:
+      - description: Publisher JSON
+        in: body
+        name: publisher
+        required: true
+        schema:
+          $ref: '#/definitions/entities.Publisher'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/entities.Publisher'
+        "400":
+          description: Bad Request
+          schema:
+            type: error
+        "406":
+          description: Not Acceptable
+          schema:
+            type: error
+      summary: Add a new publisher
+      tags:
+      - publishers
+    put:
+      description: Takes a publisher JSON and edit an in DB. Return saved JSON.
+      parameters:
+      - description: Publisher JSON
+        in: body
+        name: publisher
+        required: true
+        schema:
+          $ref: '#/definitions/entities.Publisher'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/entities.Publisher'
+        "400":
+          description: Bad Request
+          schema:
+            type: error
+        "406":
+          description: Not Acceptable
+          schema:
+            type: error
+      summary: Edit an publisher
+      tags:
+      - publishers
+  /publishers/{id}:
+    delete:
+      description: Remove an publisher from DB by id.
+      parameters:
+      - description: delete publisher by id
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/entities.Publisher'
+        "400":
+          description: Bad Request
+          schema:
+            type: error
+        "406":
+          description: Not Acceptable
+          schema:
+            type: error
+      summary: Delete an publisher
+      tags:
+      - publishers
+    get:
+      description: Returns the publisher whose id value matches the id.
+      parameters:
+      - description: search publisher by id
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/entities.Publisher'
+        "400":
+          description: Bad Request
+          schema:
+            type: error
+        "406":
+          description: Not Acceptable
+          schema:
+            type: error
+      summary: Get single publisher by id
+      tags:
+      - publishers
 swagger: "2.0"
