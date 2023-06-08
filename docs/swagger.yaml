@@ -208,4 +208,124 @@ paths:
       summary: Get single author by id
       tags:
       - authors
+  /books:
+    get:
+      description: Responds with the list of all books as JSON.
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/entities.Book'
+      summary: Get books array
+      tags:
+      - books
+    post:
+      description: Takes a book JSON and store in DB. Return saved JSON.
+      parameters:
+      - description: Book JSON
+        in: body
+        name: book
+        required: true
+        schema:
+          $ref: '#/definitions/entities.Book'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/entities.Book'
+        "400":
+          description: Bad Request
+          schema:
+            type: error
+        "406":
+          description: Not Acceptable
+          schema:
+            type: error
+      summary: Add a new book
+      tags:
+      - books
+    put:
+      description: Takes a book JSON and edit an in DB. Return saved JSON.
+      parameters:
+      - description: Book JSON
+        in: body
+        name: book
+        required: true
+        schema:
+          $ref: '#/definitions/entities.Book'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/entities.Book'
+        "400":
+          description: Bad Request
+          schema:
+            type: error
+        "406":
+          description: Not Acceptable
+          schema:
+            type: error
+      summary: Edit an book
+      tags:
+      - books
+  /books/{id}:
+    delete:
+      description: Remove an book from DB by id.
+      parameters:
+      - description: delete book by id
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/entities.Book'
+        "400":
+          description: Bad Request
+          schema:
+            type: error
+        "406":
+          description: Not Acceptable
+          schema:
+            type: error
+      summary: Delete an book
+      tags:
+      - books
+    get:
+      description: Returns the book whose id value matches the id.
+      parameters:
+      - description: search book by id
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/entities.Book'
+        "400":
+          description: Bad Request
+          schema:
+            type: error
+        "406":
+          description: Not Acceptable
+          schema:
+            type: error
+      summary: Get single book by id
+      tags:
+      - books
 swagger: "2.0"
