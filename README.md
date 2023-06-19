@@ -28,8 +28,10 @@ go run main.go
 ```bash
 http://localhost:9090/api/v1
 ```
+## Database Diagram
+![Diagram](.github/images/database_diagram.png)
 
-### Sample of Endpoints
+## Sample of Endpoints
 
 - GET localhost:9090/api/v1/books
 - GET localhost:9090/api/v1/books/:id
@@ -38,9 +40,9 @@ http://localhost:9090/api/v1
 - DELETE localhost:9090/api/v1/books/:id
 - ........
 
-### Sample API Requests and Responses
+## Sample API Requests and Responses
 
-#### POST localhost:9090/api/v1/authors
+### POST localhost:9090/api/v1/authors
 ```bash
 localhost:9090/api/v1/authors
 ```
@@ -58,7 +60,7 @@ response body:
     "message": "Author has been created"
 }
 ```
-#### POST localhost:9090/api/v1/books
+### POST localhost:9090/api/v1/books
 ```bash
 localhost:9090/api/v1/books
 ```
@@ -85,7 +87,7 @@ response body:
     "message": "Book has been created"
 }
 ```
-#### POST localhost:9090/api/v1/categories
+### POST localhost:9090/api/v1/categories
 ```bash
 localhost:9090/api/v1/categories
 ```
@@ -103,7 +105,7 @@ response body:
     "message": "Category has been created"
 }
 ```
-#### POST localhost:9090/api/v1/publishers
+### POST localhost:9090/api/v1/publishers
 ```bash
 localhost:9090/api/v1/publishers
 ```
@@ -121,7 +123,7 @@ response body:
     "publisher_id": 7
 }
 ```
-#### POST localhost:9090/api/v1/readers
+### POST localhost:9090/api/v1/readers
 ```bash
 localhost:9090/api/v1/readers
 ```
