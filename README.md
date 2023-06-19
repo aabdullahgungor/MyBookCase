@@ -117,9 +117,8 @@ request body:
 response body:
 ```bash
 {
-    "publisher_id": 7,
-    "message": "Publisher has been created"
-   
+    "message": "Publisher has been created",
+    "publisher_id": 7
 }
 ```
 #### POST localhost:9090/api/v1/readers
@@ -138,10 +137,10 @@ request body:
 response body:
 ```bash
 {
-    "reader_id": 3,
-    "name": "reader3",
     "email": "reader3@hotmail.com",
-    "message": "Reader has been created"
+    "message": "Reader has been created",
+    "name": "reader3",
+    "reader_id": 3
 }
 ```
 
